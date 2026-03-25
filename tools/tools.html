@@ -39,6 +39,16 @@ body{
     box-shadow:0 0 10px #00ffc3;
 }
 
+/* TERMINAL */
+.terminal{
+    margin:20px 40px;
+    padding:20px;
+    border:2px solid #00ffc3;
+    background:black;
+    box-shadow:0 0 20px #00ffc3;
+    font-size:14px;
+}
+
 /* SECTION */
 .section-title{
     padding:0 40px;
@@ -64,8 +74,10 @@ body{
 }
 
 .card:hover{
-    box-shadow:0 0 20px #00ffc3;
-    transform:scale(1.03);
+    transform:scale(1.05);
+    box-shadow:0 0 25px #00ffc3,
+               0 0 50px #00ffc3,
+               0 0 80px #00ffc3;
 }
 
 /* BUTTON */
@@ -96,22 +108,30 @@ button:hover{
 
 <div class="header">
     <div class="logo">🧰 ZeroTrace Tools Hub</div>
-
-    <!-- 🔥 FINAL BACK BUTTON -->
     <div class="back" onclick="goBack()">⬅ Back</div>
 </div>
 
-<!-- 🔍 INFO GATHERING -->
+<!-- 🔥 TERMINAL -->
+<div class="terminal">
+    <p>> initializing zerotrace tools...</p>
+    <p>> loading modules...</p>
+    <p>> nmap ✔ wireshark ✔ burp ✔</p>
+    <p>> system ready...</p>
+</div>
+
+<!-- 🔍 INFO -->
 <div class="section-title">🔍 Information Gathering</div>
 <div class="container">
 
 <div class="card">
 <h3>🛰️ Nmap</h3>
+<p>Network scanning & host discovery tool.</p>
 <a href="nmap.html"><button>Open</button></a>
 </div>
 
 <div class="card">
 <h3>📡 Wireshark</h3>
+<p>Packet analysis and network monitoring.</p>
 <a href="wireshark.html"><button>Open</button></a>
 </div>
 
@@ -123,50 +143,54 @@ button:hover{
 
 <div class="card">
 <h3>🕵️ Burp Suite</h3>
+<p>Web vulnerability testing toolkit.</p>
 <a href="burpsuite.html"><button>Open</button></a>
 </div>
 
 <div class="card">
 <h3>🐞 Bug Bounty</h3>
+<p>Learn real-world vulnerability hunting.</p>
 <a href="bugbounty.html"><button>Open</button></a>
 </div>
 
 </div>
 
-<!-- 💻 ENVIRONMENT -->
+<!-- 💻 ENV -->
 <div class="section-title">💻 Environment</div>
 <div class="container">
 
 <div class="card">
 <h3>🐉 Kali Linux</h3>
+<p>Cybersecurity OS with pre-installed tools.</p>
 <a href="kali.html"><button>Open</button></a>
 </div>
 
 </div>
 
-<!-- ⚔️ ATTACK -->
+<!-- ⚔️ EXPLOIT -->
 <div class="section-title">⚔️ Exploitation</div>
 <div class="container">
 
 <div class="card">
 <h3>💉 SQLMap</h3>
+<p>Automated SQL injection testing tool.</p>
 <a href="sqlmap.html"><button>Open</button></a>
 </div>
 
 <div class="card">
 <h3>🔑 John the Ripper</h3>
+<p>Password cracking tool for security testing.</p>
 <a href="john.html"><button>Open</button></a>
 </div>
 
 </div>
 
 <div class="footer">
-ZeroTrace © All Rights Reserved
+ZeroTrace ©️ All Rights Reserved
 </div>
 
 <script>
 function goBack(){
-    // 🔥 FINAL FIX (NO ERROR EVER)
     window.location.href = "../index.html#hub";
 }
 </script>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -246,4 +247,254 @@ render();
 </script>
 
 </body>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ZeroTrace Daily Tracker</title>
+
+<style>
+body {
+    background: #050505;
+    color: #00ffcc;
+    font-family: monospace;
+}
+
+/* HEADER */
+.header {
+    text-align: center;
+    font-size: 28px;
+    padding: 20px;
+    text-shadow: 0 0 15px #00ffcc;
+}
+
+/* DASHBOARD */
+.dashboard {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
+}
+
+.stat {
+    border: 1px solid #00ffcc;
+    padding: 10px;
+    width: 22%;
+    text-align: center;
+    box-shadow: 0 0 10px #00ffcc44;
+}
+
+/* FORM */
+.container {
+    width: 90%;
+    max-width: 600px;
+    margin: auto;
+    border: 1px solid #00ffcc;
+    padding: 20px;
+}
+
+input, textarea {
+    width: 100%;
+    margin: 8px 0;
+    padding: 10px;
+    background: black;
+    color: #00ffcc;
+    border: 1px solid #00ffcc;
+}
+
+/* BUTTON */
+button {
+    padding: 10px;
+    background: transparent;
+    border: 1px solid #00ffcc;
+    color: #00ffcc;
+    cursor: pointer;
+    transition: 0.3s;
+}
+button:hover {
+    background: #00ffcc;
+    color: black;
+}
+
+/* SEARCH */
+.search {
+    width: 90%;
+    margin: 20px auto;
+}
+
+/* ENTRY */
+.entry {
+    border: 1px solid #00ffcc;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 0 0 10px #00ffcc44;
+}
+
+/* PROGRESS BAR */
+.progress-box {
+    width: 90%;
+    margin: auto;
+    border: 1px solid #00ffcc;
+    height: 20px;
+}
+
+.progress {
+    height: 100%;
+    background: #00ffcc;
+    width: 0%;
+}
+
+/* BACK */
+.back {
+    text-align: center;
+    margin: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">🧠 ZeroTrace Daily Dashboard</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard">
+<div class="stat" id="total">Days: 0</div>
+<div class="stat" id="streak">Streak: 0</div>
+<div class="stat" id="entries">Entries: 0</div>
+<div class="stat" id="todayStat">Today: ❌</div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-box">
+<div id="progress" class="progress"></div>
+</div>
+
+<!-- FORM -->
+<div class="container">
+
+<input id="date" type="date">
+<textarea id="today" placeholder="What did you learn today?"></textarea>
+<textarea id="tomorrow" placeholder="Plan for tomorrow"></textarea>
+
+<button onclick="saveEntry()">Save</button>
+
+</div>
+
+<!-- SEARCH -->
+<div class="search">
+<input id="search" placeholder="Search..." onkeyup="render()">
+</div>
+
+<!-- LIST -->
+<div id="list"></div>
+
+<div class="back">
+<button onclick="window.location.href='index.html#hub'">⬅ Back</button>
+</div>
+
+<script>
+
+let data = JSON.parse(localStorage.getItem("daily")) || [];
+
+/* SAVE */
+function saveEntry(){
+
+let date = document.getElementById("date").value;
+let today = document.getElementById("today").value;
+let tomorrow = document.getElementById("tomorrow").value;
+
+if(date === "" || today === ""){
+alert("Fill required fields");
+return;
+}
+
+data.push({date, today, tomorrow});
+localStorage.setItem("daily", JSON.stringify(data));
+
+render();
+
+document.getElementById("today").value = "";
+document.getElementById("tomorrow").value = "";
+}
+
+/* DELETE */
+function del(i){
+data.splice(i,1);
+localStorage.setItem("daily", JSON.stringify(data));
+render();
+}
+
+/* EDIT */
+function edit(i){
+document.getElementById("date").value = data[i].date;
+document.getElementById("today").value = data[i].today;
+document.getElementById("tomorrow").value = data[i].tomorrow;
+
+data.splice(i,1);
+save();
+}
+
+/* RENDER */
+function render(){
+
+let search = document.getElementById("search").value.toLowerCase();
+let list = document.getElementById("list");
+list.innerHTML = "";
+
+let totalDays = data.length;
+let entries = data.length;
+
+let todayDate = new Date().toISOString().split("T")[0];
+
+let hasToday = data.some(d => d.date === todayDate);
+
+/* STREAK */
+let streak = 0;
+let dates = data.map(d=>d.date).sort().reverse();
+
+for(let i=0;i<dates.length;i++){
+let expected = new Date();
+expected.setDate(expected.getDate()-i);
+let expDate = expected.toISOString().split("T")[0];
+
+if(dates[i] === expDate) streak++;
+else break;
+}
+
+/* PROGRESS */
+let progress = Math.min((streak/30)*100,100);
+document.getElementById("progress").style.width = progress + "%";
+
+/* DISPLAY */
+data.slice().reverse().forEach((d,i)=>{
+
+if(!d.today.toLowerCase().includes(search)) return;
+
+list.innerHTML += `
+<div class="entry">
+<h3>${d.date}</h3>
+<p><b>📘 Today:</b> ${d.today}</p>
+<p><b>📅 Tomorrow:</b> ${d.tomorrow}</p>
+
+<button onclick="edit(${data.length-1-i})">Edit</button>
+<button onclick="del(${data.length-1-i})">Delete</button>
+</div>
+`;
+
+});
+
+/* DASHBOARD */
+document.getElementById("total").innerText = "Days: " + totalDays;
+document.getElementById("entries").innerText = "Entries: " + entries;
+document.getElementById("streak").innerText = "Streak: " + streak;
+document.getElementById("todayStat").innerText = "Today: " + (hasToday ? "✅" : "❌");
+
+}
+
+render();
+
+</script>
+
+</body>
+>>>>>>> dc1931d105c0e1f2e0d9ca55c0cb1ea85cb6c61c
 </html>

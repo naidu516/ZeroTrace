@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -255,4 +256,256 @@ function closeAbout(){
 </script>
 
 </body>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ZeroTrace</title>
+
+<style>
+body {
+    margin: 0;
+    background: #050505;
+    color: #00ffcc;
+    font-family: monospace;
+}
+
+/* HEADER */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    font-size: 26px;
+    text-shadow: 0 0 15px #00ffcc;
+}
+
+.right-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* NAV BUTTON */
+.nav-btn {
+    border: 1px solid #00ffcc;
+    padding: 8px 15px;
+    cursor: pointer;
+}
+.nav-btn:hover {
+    box-shadow: 0 0 10px #00ffcc, 0 0 25px #00ffcc;
+}
+
+/* TITLE */
+.title {
+    margin-left: 30px;
+}
+
+/* GRID */
+.container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    padding: 30px;
+}
+
+/* CARD */
+.card {
+    border: 2px solid #00ffcc;
+    padding: 40px;
+    text-align: center;
+    border-radius: 12px;
+    transition: 0.3s;
+}
+.card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 20px #00ffcc;
+}
+
+/* BUTTON */
+button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: 2px solid #00ffcc;
+    background: transparent;
+    color: #00ffcc;
+    cursor: pointer;
+}
+button:hover {
+    background: #00ffcc;
+    color: black;
+}
+
+/* POPUP */
+.popup {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.popup-box {
+    background: #050505;
+    border: 2px solid #00ffcc;
+    padding: 30px;
+    text-align: center;
+    width: 350px;
+    box-shadow: 0 0 40px #00ffcc;
+}
+
+/* WELCOME */
+.welcome {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #050505;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.welcome-box {
+    border: 2px solid #00ffcc;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 0 50px #00ffcc;
+}
+</style>
+</head>
+
+<body>
+
+<!-- WELCOME SCREEN -->
+<div id="welcomeScreen" class="welcome">
+    <div class="welcome-box">
+        <h1>⚡ ZeroTrace</h1>
+        <p>
+            Zerotrace welcomes you 👨‍💻<br><br>
+            ✔ Use only on authorized systems<br>
+            ✔ Follow ethical hacking rules<br><br>
+            <b>Information is power — use it wisely.</b>
+        </p>
+        <button onclick="enterApp()">I Agree</button>
+    </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+    ⚡ ZeroTrace
+    <div class="right-buttons">
+        <div class="nav-btn" onclick="openAbout()">About</div>
+        <div class="nav-btn" onclick="openContact()">Contact</div>
+    </div>
+</div>
+
+<h2 class="title">Dashboard</h2>
+
+<!-- GRID -->
+<div class="container">
+
+    <div class="card">
+        <h3>🧰 Tools Hub</h3>
+        <a href="tools/tools.html"><button>Open</button></a>
+    </div>
+
+    <div class="card">
+        <h3>🚀 My Project</h3>
+        <a href="project.html"><button>View</button></a>
+    </div>
+
+    <div class="card">
+        <h3>🐞 Bug Tracker</h3>
+        <a href="tracker.html"><button>Open</button></a>
+    </div>
+
+    <div class="card">
+        <h3>🧭 Roadmap</h3>
+        <a href="roadmap.html"><button>Open</button></a>
+    </div>
+
+    <div class="card">
+        <h3>📝 Daily Tracker</h3>
+        <a href="daily.html"><button>Open</button></a>
+    </div>
+
+    <div class="card">
+        <h3>🧠 Quiz</h3>
+        <button disabled style="opacity:0.5;">Coming Soon</button>
+    </div>
+
+</div>
+
+<!-- CONTACT POPUP -->
+<div id="contactPopup" class="popup">
+    <div class="popup-box">
+        <h2>📞 Contact</h2>
+        <p>👤 Shanmuga</p>
+        <p>📱 +91 8121424097</p>
+        <p>💻 GitHub: naidu516</p>
+        <p>🐦 Twitter: shanmugachowda02</p>
+        <p>📸 Instagram: zerotrace</p>
+        <button onclick="closeContact()">Close</button>
+    </div>
+</div>
+
+<!-- ABOUT POPUP -->
+<div id="aboutPopup" class="popup">
+    <div class="popup-box">
+        <h2>🧠 About Me</h2>
+        <p>
+        I am Shanmuga, a cybersecurity student building ZeroTrace to help students
+        learn, practice, and track their cybersecurity journey. My goal is to
+        become a high-level cybersecurity professional and build powerful tools.
+        </p>
+        <button onclick="closeAbout()">Close</button>
+    </div>
+</div>
+
+<script>
+
+/* SHOW WELCOME ONLY IF NOT AGREED */
+document.addEventListener("DOMContentLoaded", function(){
+    if(localStorage.getItem("agreed") !== "true"){
+        document.getElementById("welcomeScreen").style.display = "flex";
+    }
+});
+
+/* CLICK I AGREE */
+function enterApp(){
+    localStorage.setItem("agreed","true");
+
+    let screen = document.getElementById("welcomeScreen");
+    screen.style.transition = "opacity 0.5s";
+    screen.style.opacity = "0";
+
+    setTimeout(()=>{
+        screen.style.display = "none";
+    },500);
+}
+
+/* CONTACT */
+function openContact(){
+    document.getElementById("contactPopup").style.display = "flex";
+}
+function closeContact(){
+    document.getElementById("contactPopup").style.display = "none";
+}
+
+/* ABOUT */
+function openAbout(){
+    document.getElementById("aboutPopup").style.display = "flex";
+}
+function closeAbout(){
+    document.getElementById("aboutPopup").style.display = "none";
+}
+
+</script>
+
+</body>
+>>>>>>> dc1931d105c0e1f2e0d9ca55c0cb1ea85cb6c61c
 </html>

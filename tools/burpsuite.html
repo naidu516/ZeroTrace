@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -179,4 +180,187 @@ function goBack(){
 </script>
 
 </body>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Burp Suite Guide</title>
+
+<style>
+body{
+    margin:0;
+    font-family: monospace;
+    background:#0a0a0a;
+    color:#00ffc3;
+}
+
+/* HEADER */
+.header{
+    display:flex;
+    justify-content:space-between;
+    padding:20px;
+}
+
+/* BACK BUTTON */
+.btn{
+    border:1px solid #00ffc3;
+    padding:8px 15px;
+    cursor:pointer;
+    background:transparent;
+    color:#00ffc3;
+    border-radius:5px;
+}
+
+.btn:hover{
+    background:#00ffc3;
+    color:#000;
+    box-shadow:0 0 15px #00ffc3;
+}
+
+/* MAIN */
+.main{
+    max-width:900px;
+    margin:auto;
+    padding:20px;
+}
+
+/* SECTION */
+.section{
+    border:1px solid #00ffc3;
+    padding:20px;
+    margin-bottom:20px;
+    border-radius:10px;
+    transition:0.3s;
+}
+
+.section:hover{
+    box-shadow:0 0 20px #00ffc3;
+}
+
+/* TITLE */
+h1,h2{
+    text-shadow:0 0 10px #00ffc3;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h2>🛠️ Burp Suite Guide</h2>
+    <button onclick="goBack()" class="btn">⬅ Back</button>
+</div>
+
+<div class="main">
+
+<div class="section">
+<h1>💉 What is Burp Suite</h1>
+<p>Burp Suite is a powerful tool used for web application security testing.</p>
+<p>It helps to:</p>
+<ul>
+<li>Intercept requests 🔍</li>
+<li>Modify traffic ⚙️</li>
+<li>Find vulnerabilities 💥</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>⚙️ Installation</h2>
+<p>Usually pre-installed in Kali Linux.</p>
+<pre>sudo apt install burpsuite</pre>
+</div>
+
+<div class="section">
+<h2>🟢 Phase 1: Beginner</h2>
+<p><b>Proxy Setup:</b></p>
+<ul>
+<li>Open Burp → Proxy → Turn ON Intercept</li>
+<li>Set browser proxy to 127.0.0.1:8080</li>
+</ul>
+
+<p><b>Intercept Request:</b></p>
+<ul>
+<li>Capture request from browser</li>
+<li>View headers and parameters</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>🟡 Phase 2: Intermediate</h2>
+
+<p><b>Repeater:</b></p>
+<ul>
+<li>Send request to Repeater</li>
+<li>Modify values and test manually</li>
+</ul>
+
+<p><b>Intruder:</b></p>
+<ul>
+<li>Automate attacks</li>
+<li>Bruteforce parameters</li>
+</ul>
+
+<p><b>Decoder:</b></p>
+<ul>
+<li>Decode/encode data (Base64, URL, etc.)</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>🔴 Phase 3: Advanced</h2>
+
+<p><b>Scanner (Pro):</b></p>
+<ul>
+<li>Automatically finds vulnerabilities</li>
+</ul>
+
+<p><b>Extensions:</b></p>
+<ul>
+<li>Add plugins from BApp Store</li>
+</ul>
+
+<p><b>Session Handling:</b></p>
+<ul>
+<li>Manage cookies & authentication</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>🧠 Real Workflow</h2>
+<ol>
+<li>Capture request</li>
+<li>Send to Repeater</li>
+<li>Test manually</li>
+<li>Use Intruder</li>
+<li>Confirm vulnerability</li>
+</ol>
+</div>
+
+<div class="section">
+<h2>💡 Pro Tips</h2>
+<ul>
+<li>Always test manually first</li>
+<li>Use Burp with SQLMap</li>
+<li>Understand requests deeply</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>🔥 Final Truth</h2>
+<p>👉 Burp doesn’t hack</p>
+<p>👉 It helps you understand web apps</p>
+<p><b>Understanding = Power 💯</b></p>
+</div>
+
+</div>
+
+<script>
+function goBack(){
+    window.location.href = "../index.html";
+}
+</script>
+
+</body>
+>>>>>>> dc1931d105c0e1f2e0d9ca55c0cb1ea85cb6c61c
 </html>
