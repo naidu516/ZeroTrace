@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rapyd Bug Bounty Recon</title>
+
+<style>
+body {
+    margin: 0;
+    background: #000;
+    color: #00ffcc;
+    font-family: monospace;
+}
+
+.header {
+    padding: 20px;
+    font-size: 26px;
+    border-bottom: 1px solid #00ffcc;
+}
+
+.main {
+    padding: 30px;
+    max-width: 900px;
+    margin: auto;
+}
+
+.section {
+    border: 1px solid #00ffcc;
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #00ffcc;
+    line-height: 1.7;
+}
+
+pre {
+    background: #111;
+    padding: 12px;
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+.back {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.btn {
+    background: transparent;
+    border: 1px solid #00ffcc;
+    color: #00ffcc;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #00ffcc;
+    color: #000;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">🛡️ Rapyd Bug Bounty Recon (ZeroTrace)</div>
+
+<div class="main">
+
+<div class="section">
+<p><b>⚠️ Note:</b> This research was conducted within authorized scope for educational purposes.</p>
+</div>
+
+<div class="section">
+<h2>🎯 Target</h2>
+<p>Domain: rapyd.net</p>
+<p>Scope: Public bug bounty assets (web applications & APIs)</p>
+</div>
+
+<div class="section">
+<h2>📌 Objective</h2>
+<p>Perform reconnaissance and endpoint discovery to identify:</p>
+<ul>
+<li>IDOR</li>
+<li>Open Redirect</li>
+<li>API Misconfiguration</li>
+<li>Authentication issues</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>⚙️ Tools Used</h2>
+<ul>
+<li>Kali Linux</li>
+<li>Burp Suite</li>
+<li>Gobuster</li>
+<li>Subfinder</li>
+<li>waybackurls</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>🔍 Methodology</h2>
+
+<p><b>1. Subdomain Enumeration</b></p>
+<p>Discovered 262 subdomains</p>
+<pre>subdomains.txt</pre>
+
+<p><b>2. Alive Domains</b></p>
+<pre>alive_subdomains.txt</pre>
+
+<p><b>3. Directory Enumeration</b></p>
+<pre>
+/login
+/build
+/layout
+/layouts
+/error
+/health
+/robots.txt
+</pre>
+
+<p><b>4. Traffic Analysis</b></p>
+<pre>
+/gateway/api/gasv3/api/v1/batch
+/metadata
+/telemetry
+</pre>
+
+<p><b>5. Wayback URLs</b></p>
+<pre>wayback_urls.txt</pre>
+
+<p><b>6. Parameter Discovery</b></p>
+<pre>params.txt</pre>
+
+</div>
+
+<div class="section">
+<h2>🔬 Key Findings</h2>
+<p>Observed API fields:</p>
+<pre>
+redirect_url
+complete_payment_url
+error_payment_url
+remittance_id
+tokenid
+</pre>
+
+<pre>remittance_id=50116053</pre>
+</div>
+
+<div class="section">
+<h2>⚠️ Attack Surface</h2>
+<ul>
+<li>IDOR → modify remittance_id</li>
+<li>Open Redirect → redirect_url</li>
+<li>Token Replay → token reuse</li>
+<li>API Logic issues</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>📁 Project Structure</h2>
+<pre>
+rapyd-research/
+├── subdomains.txt
+├── alive_subdomains.txt
+├── gobuster.txt
+├── wayback_urls.txt
+├── params.txt
+├── notes.txt
+└── Tue 17 March 2026.txt
+</pre>
+</div>
+
+<div class="section">
+<h2>📈 Current Status</h2>
+<p>Recon: ✅ Completed</p>
+<p>Endpoints: ✅ Completed</p>
+<p>Parameters: 🔄 In Progress</p>
+<p>Testing: ⏳ Pending</p>
+</div>
+
+<div class="section">
+<h2>🚀 Next Steps</h2>
+<ul>
+<li>Extract parameters</li>
+<li>Analyze APIs</li>
+<li>Test IDOR</li>
+<li>Test redirects</li>
+<li>Validate authentication</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>🧠 Learning Outcome</h2>
+<ul>
+<li>Real bug bounty workflow</li>
+<li>Recon techniques</li>
+<li>API analysis</li>
+<li>Structured documentation</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>🏁 Conclusion</h2>
+<p>Structured reconnaissance process for real-world vulnerability discovery.</p>
+</div>
+
+<div class="back">
+<button class="btn" onclick="goBack()">⬅ Back to Hub</button>
+</div>
+
+</div>
+
+<script>
+function goBack() {
+    window.location.href = "index.html#hub";
+}
+</script>
+
+</body>
+</html>

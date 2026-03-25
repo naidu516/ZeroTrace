@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wireshark Guide</title>
+
+<style>
+body {
+    margin: 0;
+    background: #000;
+    color: #00ffcc;
+    font-family: monospace;
+}
+
+/* MAIN */
+.main {
+    max-width: 900px;
+    margin: auto;
+    padding: 40px 20px;
+}
+
+/* TITLE */
+.title {
+    text-align: center;
+    margin-bottom: 30px;
+    text-shadow: 0 0 15px #00ffcc;
+}
+
+/* SECTION */
+.section {
+    border: 1px solid #00ffcc;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #00ffcc;
+    line-height: 1.7;
+}
+
+/* CODE */
+pre {
+    background: #050505;
+    padding: 12px;
+    border-left: 3px solid #00ffcc;
+    overflow-x: auto;
+}
+
+/* BUTTON */
+.btn {
+    border: 1px solid #00ffcc;
+    background: transparent;
+    color: #00ffcc;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #00ffcc;
+    color: black;
+}
+
+/* BACK BUTTON */
+.back-btn {
+    margin-top: 40px;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .main {
+        padding: 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="main">
+
+<h1 class="title">🦈 Wireshark Full Guide</h1>
+
+<div class="section">
+<h2>1. What is Wireshark</h2>
+<p>A tool to capture and analyze network traffic</p>
+<p>Shows what data is going in and out of your system</p>
+<p>Used in Cybersecurity, Networking, Forensics</p>
+</div>
+
+<div class="section">
+<h2>🟢 PHASE 1: BEGINNER</h2>
+
+<p><b>⚙️ Open Wireshark</b></p>
+<pre>wireshark</pre>
+
+<p><b>🌐 Select Interface</b></p>
+<p>wlan0 → Wi-Fi</p>
+<p>eth0 → Ethernet</p>
+
+<p><b>📡 Start/Stop Capture</b></p>
+<p>Start → Double click</p>
+<p>Stop → Red button</p>
+
+<p><b>🔍 Screen Layout</b></p>
+<ul>
+<li>Packet List</li>
+<li>Packet Details</li>
+<li>Packet Bytes</li>
+</ul>
+
+<p><b>🎯 Filters</b></p>
+<pre>
+http
+dns
+tcp
+ip.addr == 192.168.1.1
+</pre>
+
+<p><b>🧪 Practice</b></p>
+<p>Capture DNS → visit google.com → filter dns</p>
+
+</div>
+
+<div class="section">
+<h2>🟡 PHASE 2: INTERMEDIATE</h2>
+
+<p><b>🔁 TCP Stream</b></p>
+<p>Right click → Follow TCP Stream</p>
+
+<p><b>🧠 Protocols</b></p>
+<ul>
+<li>DNS → domain to IP</li>
+<li>TCP → connection</li>
+<li>HTTP → website data</li>
+</ul>
+
+<p><b>🔎 Analyze</b></p>
+<p>Check IP, protocol, length</p>
+
+</div>
+
+<div class="section">
+<h2>🔴 PHASE 3: ADVANCED</h2>
+
+<p><b>⚡ Detect Suspicious Activity</b></p>
+<p>Unknown IPs, too many requests</p>
+
+<p><b>🔥 Credentials (Lab Only)</b></p>
+<p>Filter http → Follow TCP</p>
+
+<p><b>🌐 HTTP vs HTTPS</b></p>
+<p>HTTP readable</p>
+<p>HTTPS encrypted</p>
+
+<p><b>📊 Advanced Filters</b></p>
+<pre>
+ip.src == 192.168.1.5 && ip.dst == 192.168.1.1
+dns.flags.response == 0
+tcp.analysis.flags
+</pre>
+
+<p><b>🧰 Export Data</b></p>
+<p>File → Export Objects</p>
+
+<p><b>🧠 Use Cases</b></p>
+<ul>
+<li>Debug network</li>
+<li>Analyze malware</li>
+<li>Investigate attacks</li>
+</ul>
+
+</div>
+
+<div class="section">
+<h2>⚠️ Rules</h2>
+<p>✔ Use only on your network</p>
+<p>❌ No illegal capture</p>
+</div>
+
+<div class="section">
+<h2>🚀 Learning Plan</h2>
+<ul>
+<li>Day 1: Capture</li>
+<li>Day 2: Filters</li>
+<li>Day 3: TCP stream</li>
+<li>Day 4: Analysis</li>
+</ul>
+</div>
+
+<div class="section">
+<h2>💡 Final Advice</h2>
+<p>👉 Wireshark is not about tools</p>
+<p>👉 It’s about understanding traffic</p>
+</div>
+
+<!-- BACK BUTTON -->
+<div style="text-align:center;">
+    <button onclick="window.location.href='index.html#hub'" class="btn back-btn">
+        ⬅ Back to Hub
+    </button>
+</div>
+
+</div>
+
+</body>
+</html>
