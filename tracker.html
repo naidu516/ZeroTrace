@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ZeroTrace Bug Tracker</title>
+
+<style>
+body {
+    background: #050505;
+    color: #00ffcc;
+    font-family: monospace;
+}
+
+/* HEADER */
+.header {
+    text-align: center;
+    font-size: 28px;
+    padding: 20px;
+    text-shadow: 0 0 10px #00ffcc;
+}
+
+/* DASHBOARD */
+.dashboard {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
+}
+
+.stat {
+    border: 1px solid #00ffcc;
+    padding: 10px;
+    width: 22%;
+    text-align: center;
+    box-shadow: 0 0 10px #00ffcc44;
+}
+
+/* FORM */
+.form {
+    width: 90%;
+    max-width: 600px;
+    margin: auto;
+    border: 1px solid #00ffcc;
+    padding: 15px;
+}
+
+input, select, textarea {
+    width: 100%;
+    margin: 8px 0;
+    padding: 8px;
+    background: black;
+    color: #00ffcc;
+    border: 1px solid #00ffcc;
+}
+
+/* BUTTON */
+button {
+    padding: 10px;
+    background: transparent;
+    border: 1px solid #00ffcc;
+    color: #00ffcc;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #00ffcc;
+    color: black;
+}
+
+/* ERROR */
+#error {
+    color: red;
+    text-align: center;
+}
+
+/* SEARCH */
+.search {
+    width: 90%;
+    margin: 20px auto;
+}
+
+/* CARD */
+.card {
+    border: 1px solid #00ffcc;
+    margin: 10px;
+    padding: 10px;
+    box-shadow: 0 0 10px #00ffcc44;
+}
+
+/* SEVERITY COLORS */
+.low { color: #00ff00; }
+.medium { color: yellow; }
+.high { color: orange; }
+.critical { color: red; }
+
+/* BACK */
+.back {
+    text-align: center;
+    margin: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">⚡ ZeroTrace Advanced Tracker</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard">
+<div class="stat" id="total">Total: 0</div>
+<div class="stat" id="pending">Pending: 0</div>
+<div class="stat" id="fixed">Fixed: 0</div>
+<div class="stat" id="critical">Critical: 0</div>
+</div>
+
+<!-- FORM -->
+<div class="form">
+
+<p id="error"></p>
+
+<input id="title" placeholder="Bug Title">
+
+<select id="category">
+<option>XSS</option>
+<option>SQL Injection</option>
+<option>CSRF</option>
+<option>Broken Auth</option>
+<option>Other</option>
+</select>
+
+<select id="severity">
+<option>Low</option>
+<option>Medium</option>
+<option>High</option>
+<option>Critical</option>
+</select>
+
+<select id="status">
+<option>Open</option>
+<option>In Progress</option>
+<option>Fixed</option>
+<option>Closed</option>
+</select>
+
+<input id="name" placeholder="Reporter Name">
+<input id="email" placeholder="Email">
+
+<textarea id="desc" placeholder="Description"></textarea>
+<textarea id="poc" placeholder="Proof / PoC"></textarea>
+
+<input type="file" id="img">
+
+<button onclick="addBug()">Add Bug</button>
+
+</div>
+
+<!-- SEARCH -->
+<div class="search">
+<input id="search" placeholder="Search..." onkeyup="render()">
+</div>
+
+<!-- LIST -->
+<div id="list"></div>
+
+<div class="back">
+<button onclick="window.location.href='../index.html#hub'">⬅ Back</button>
+</div>
+
+<script>
+
+let bugs = JSON.parse(localStorage.getItem("bugs")) || [];
+let editIndex = -1;
+
+/* AUTO SEVERITY */
+function autoSeverity(title){
+    title = title.toLowerCase();
+    if(title.includes("sql")) return "Critical";
+    if(title.includes("xss")) return "High";
+    return "Medium";
+}
+
+/* SAVE */
+function save(){
+    localStorage.setItem("bugs", JSON.stringify(bugs));
+}
+
+/* ADD */
+function addBug(){
+
+let title = document.getElementById("title").value.trim();
+let category = document.getElementById("category").value;
+let severity = document.getElementById("severity").value;
+let status = document.getElementById("status").value;
+let name = document.getElementById("name").value;
+let email = document.getElementById("email").value;
+let desc = document.getElementById("desc").value;
+let poc = document.getElementById("poc").value;
+let file = document.getElementById("img").files[0];
+
+if(title === ""){
+document.getElementById("error").innerText = "⚠ Enter title";
+return;
+}
+
+document.getElementById("error").innerText = "";
+
+severity = autoSeverity(title);
+
+let reader = new FileReader();
+
+reader.onload = function(e){
+
+let img = e.target.result || "";
+
+let bug = {
+title, category, severity, status,
+name, email, desc, poc, img,
+date: new Date().toLocaleString()
+};
+
+if(editIndex === -1){
+bugs.push(bug);
+}else{
+bugs[editIndex] = bug;
+editIndex = -1;
+}
+
+save();
+render();
+};
+
+if(file){
+reader.readAsDataURL(file);
+}else{
+reader.onload({ target: { result: "" } });
+}
+
+}
+
+/* DELETE */
+function del(i){
+bugs.splice(i,1);
+save();
+render();
+}
+
+/* RENDER */
+function render(){
+
+let searchInput = document.getElementById("search");
+let search = searchInput ? searchInput.value.toLowerCase() : "";
+
+let list = document.getElementById("list");
+list.innerHTML = "";
+
+let total=0, fixed=0, pending=0, critical=0;
+
+let severityOrder = ["Low","Medium","High","Critical"];
+
+bugs
+.sort((a,b)=> severityOrder.indexOf(b.severity) - severityOrder.indexOf(a.severity))
+.forEach((b,i)=>{
+
+if(!b.title.toLowerCase().includes(search)) return;
+
+total++;
+if(b.status==="Fixed") fixed++;
+else pending++;
+if(b.severity==="Critical") critical++;
+
+list.innerHTML += `
+<div class="card">
+<h3>${b.title}</h3>
+<p>Category: ${b.category}</p>
+<p class="${b.severity.toLowerCase()}">Severity: ${b.severity}</p>
+
+<select onchange="updateStatus(${i},this.value)">
+<option ${b.status==="Open"?"selected":""}>Open</option>
+<option ${b.status==="In Progress"?"selected":""}>In Progress</option>
+<option ${b.status==="Fixed"?"selected":""}>Fixed</option>
+<option ${b.status==="Closed"?"selected":""}>Closed</option>
+</select>
+
+<p>Reporter: ${b.name || "N/A"}</p>
+<p>Email: ${b.email || "N/A"}</p>
+<p>${b.desc}</p>
+<p><b>PoC:</b> ${b.poc}</p>
+<p>Date: ${b.date}</p>
+
+${b.img ? <img src="${b.img}" width="100%"> : ""}
+
+<button onclick="del(${i})">Delete</button>
+</div>
+`;
+});
+
+/* UPDATE DASHBOARD */
+document.getElementById("total").innerText = "Total: "+total;
+document.getElementById("fixed").innerText = "Fixed: "+fixed;
+document.getElementById("pending").innerText = "Pending: "+pending;
+document.getElementById("critical").innerText = "Critical: "+critical;
+
+}
+
+/* STATUS UPDATE */
+function updateStatus(i,val){
+bugs[i].status = val;
+save();
+render();
+}
+
+render();
+
+</script>
+
+</body>
+</html>

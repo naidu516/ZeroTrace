@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ZeroTrace Tools Hub</title>
+
+<style>
+body{
+    margin:0;
+    background: radial-gradient(circle at top, #0a0a0a, #000);
+    color:#00ffc3;
+    font-family:monospace;
+}
+
+/* HEADER */
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 40px;
+}
+
+.logo{
+    font-size:26px;
+    font-weight:bold;
+}
+
+/* BACK BUTTON */
+.back{
+    border:1px solid #00ffc3;
+    padding:6px 14px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.back:hover{
+    background:#00ffc3;
+    color:#000;
+    box-shadow:0 0 10px #00ffc3;
+}
+
+/* SECTION */
+.section-title{
+    padding:0 40px;
+    margin-top:40px;
+    font-size:18px;
+}
+
+/* GRID */
+.container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:40px;
+    padding:20px 40px;
+}
+
+/* CARD */
+.card{
+    border:2px solid #00ffc3;
+    padding:30px;
+    text-align:center;
+    border-radius:10px;
+    transition:0.3s;
+}
+
+.card:hover{
+    box-shadow:0 0 20px #00ffc3;
+    transform:scale(1.03);
+}
+
+/* BUTTON */
+button{
+    margin-top:10px;
+    padding:8px 15px;
+    border:1px solid #00ffc3;
+    background:none;
+    color:#00ffc3;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#00ffc3;
+    color:#000;
+}
+
+/* FOOTER */
+.footer{
+    text-align:center;
+    margin:40px 0;
+    opacity:0.6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <div class="logo">🧰 ZeroTrace Tools Hub</div>
+
+    <!-- 🔥 FINAL BACK BUTTON -->
+    <div class="back" onclick="goBack()">⬅ Back</div>
+</div>
+
+<!-- 🔍 INFO GATHERING -->
+<div class="section-title">🔍 Information Gathering</div>
+<div class="container">
+
+<div class="card">
+<h3>🛰️ Nmap</h3>
+<a href="nmap.html"><button>Open</button></a>
+</div>
+
+<div class="card">
+<h3>📡 Wireshark</h3>
+<a href="wireshark.html"><button>Open</button></a>
+</div>
+
+</div>
+
+<!-- 🌐 WEB -->
+<div class="section-title">🌐 Web Testing</div>
+<div class="container">
+
+<div class="card">
+<h3>🕵️ Burp Suite</h3>
+<a href="burpsuite.html"><button>Open</button></a>
+</div>
+
+<div class="card">
+<h3>🐞 Bug Bounty</h3>
+<a href="bugbounty.html"><button>Open</button></a>
+</div>
+
+</div>
+
+<!-- 💻 ENVIRONMENT -->
+<div class="section-title">💻 Environment</div>
+<div class="container">
+
+<div class="card">
+<h3>🐉 Kali Linux</h3>
+<a href="kali.html"><button>Open</button></a>
+</div>
+
+</div>
+
+<!-- ⚔️ ATTACK -->
+<div class="section-title">⚔️ Exploitation</div>
+<div class="container">
+
+<div class="card">
+<h3>💉 SQLMap</h3>
+<a href="sqlmap.html"><button>Open</button></a>
+</div>
+
+<div class="card">
+<h3>🔑 John the Ripper</h3>
+<a href="john.html"><button>Open</button></a>
+</div>
+
+</div>
+
+<div class="footer">
+ZeroTrace © All Rights Reserved
+</div>
+
+<script>
+function goBack(){
+    // 🔥 FINAL FIX (NO ERROR EVER)
+    window.location.href = "../index.html#hub";
+}
+</script>
+
+</body>
+</html>
