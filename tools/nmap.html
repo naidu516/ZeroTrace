@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,12 +5,19 @@
 <title>Nmap Guide - ZeroTrace</title>
 
 <style>
+
 body{
     margin:0;
     background:#000;
     color:#00ffc3;
     font-family:monospace;
     padding:20px;
+    animation:fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(10px);}
+    to{opacity:1; transform:translateY(0);}
 }
 
 /* HEADER */
@@ -25,11 +31,23 @@ body{
     border:1px solid #00ffc3;
     padding:6px 12px;
     cursor:pointer;
+    transition:0.3s;
+}
+
+.back:hover{
+    background:#00ffc3;
+    color:#000;
+    box-shadow:0 0 10px #00ffc3;
 }
 
 /* SECTION */
 .section{
     margin-top:30px;
+    transition:0.3s;
+}
+
+.section:hover{
+    transform:scale(1.01);
 }
 
 h2{
@@ -44,6 +62,7 @@ pre{
     overflow:auto;
     border-left:3px solid #00ffc3;
 }
+
 </style>
 </head>
 
@@ -198,205 +217,4 @@ nmap -A 192.168.1.5
 </div>
 
 </body>
-=======
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Nmap Guide - ZeroTrace</title>
-
-<style>
-body{
-    margin:0;
-    background:#000;
-    color:#00ffc3;
-    font-family:monospace;
-    padding:20px;
-}
-
-/* HEADER */
-.header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.back{
-    border:1px solid #00ffc3;
-    padding:6px 12px;
-    cursor:pointer;
-}
-
-/* SECTION */
-.section{
-    margin-top:30px;
-}
-
-h2{
-    border-bottom:1px solid #00ffc3;
-    padding-bottom:5px;
-}
-
-/* CODE BLOCK */
-pre{
-    background:#111;
-    padding:12px;
-    overflow:auto;
-    border-left:3px solid #00ffc3;
-}
-</style>
-</head>
-
-<body>
-
-<div class="header">
-<h1>🛰️ Nmap Complete Guide</h1>
-<div class="back" onclick="window.location.href='tools.html'">⬅ Back</div>
-</div>
-
-<!-- 1 -->
-<div class="section">
-<h2>1. What is Nmap</h2>
-<p>Nmap is a network scanning tool used to:</p>
-<ul>
-<li>Find open ports 🔓</li>
-<li>Detect running services ⚙️</li>
-<li>Identify OS 🧠</li>
-<li>Used in ethical hacking, bug bounty, and network auditing</li>
-</ul>
-</div>
-
-<!-- 2 -->
-<div class="section">
-<h2>2. Install Nmap</h2>
-<pre>
-sudo apt update
-sudo apt install nmap -y
-</pre>
-</div>
-
-<!-- BEGINNER -->
-<div class="section">
-<h2>🟢 Beginner Phase</h2>
-
-<h3>Basic Scan</h3>
-<pre>nmap scanme.nmap.org</pre>
-
-<h3>Scan Specific IP</h3>
-<pre>nmap 192.168.1.1</pre>
-
-<h3>Scan Multiple Targets</h3>
-<pre>
-nmap 192.168.1.1 192.168.1.2
-nmap 192.168.1.1-100
-</pre>
-
-<h3>Scan Specific Port</h3>
-<pre>nmap -p 80 192.168.1.1</pre>
-
-<h3>Multiple Ports</h3>
-<pre>nmap -p 22,80,443 192.168.1.1</pre>
-
-<h3>All Ports</h3>
-<pre>nmap -p- 192.168.1.1</pre>
-
-</div>
-
-<!-- INTERMEDIATE -->
-<div class="section">
-<h2>🟡 Intermediate Phase</h2>
-
-<h3>Service Version Detection</h3>
-<pre>nmap -sV 192.168.1.1</pre>
-
-<h3>OS Detection</h3>
-<pre>nmap -O 192.168.1.1</pre>
-
-<h3>Aggressive Scan</h3>
-<pre>nmap -A 192.168.1.1</pre>
-
-<h3>Fast Scan</h3>
-<pre>nmap -F 192.168.1.1</pre>
-
-<h3>Scan Without Ping</h3>
-<pre>nmap -Pn 192.168.1.1</pre>
-
-</div>
-
-<!-- ADVANCED -->
-<div class="section">
-<h2>🔴 Advanced Phase</h2>
-
-<h3>SYN Scan</h3>
-<pre>sudo nmap -sS 192.168.1.1</pre>
-
-<h3>UDP Scan</h3>
-<pre>sudo nmap -sU 192.168.1.1</pre>
-
-<h3>Script Scan</h3>
-<pre>nmap --script vuln 192.168.1.1</pre>
-
-<h3>Specific Script</h3>
-<pre>nmap --script http-title 192.168.1.1</pre>
-
-<h3>Scan Subnet</h3>
-<pre>nmap 192.168.1.0/24</pre>
-
-<h3>Save Output</h3>
-<pre>nmap -oN result.txt 192.168.1.1</pre>
-
-<h3>Firewall Evasion</h3>
-<pre>nmap -f 192.168.1.1</pre>
-
-</div>
-
-<!-- WORKFLOW -->
-<div class="section">
-<h2>🧠 Real Usage Flow</h2>
-<pre>
-nmap -sn 192.168.1.0/24
-nmap 192.168.1.5
-nmap -sV 192.168.1.5
-nmap -A 192.168.1.5
-</pre>
-</div>
-
-<!-- USAGE -->
-<div class="section">
-<h2>How Hackers Use Nmap</h2>
-<ul>
-<li>Find open ports</li>
-<li>Identify services</li>
-<li>Discover vulnerabilities</li>
-<li>Plan attacks</li>
-</ul>
-</div>
-
-<!-- RULES -->
-<div class="section">
-<h2>⚠️ Rules</h2>
-<p>✔ Use only on authorized systems</p>
-<p>❌ Don’t scan random websites</p>
-</div>
-
-<!-- TIPS -->
-<div class="section">
-<h2>💡 Pro Tips</h2>
-<ul>
-<li>Start simple → then go advanced</li>
-<li>Combine with Burp Suite & Wireshark</li>
-<li>Always analyze results</li>
-</ul>
-</div>
-
-<!-- FINAL -->
-<div class="section">
-<h2>🔥 Final Truth</h2>
-<p>Nmap doesn’t hack.</p>
-<p>👉 It reveals information.</p>
-<p>👉 Information = Power 💯</p>
-</div>
-
-</body>
->>>>>>> dc1931d105c0e1f2e0d9ca55c0cb1ea85cb6c61c
 </html>

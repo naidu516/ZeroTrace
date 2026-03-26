@@ -1,0 +1,110 @@
+body {
+    margin: 0;
+    font-family: monospace;
+    background: #0a0a0a;
+    color: #00ffcc;
+    display: flex;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 220px;
+    height: 100vh;
+    background: #050505;
+    padding: 20px;
+    box-shadow: 0 0 20px #00ffcc33;
+}
+
+.sidebar h2 {
+    margin-bottom: 30px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    padding: 12px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.sidebar li:hover {
+    background: #00ffcc22;
+    box-shadow: 0 0 10px #00ffcc;
+}
+
+/* MAIN */
+.main {
+    flex: 1;
+    padding: 40px;
+}
+
+/* TOPBAR */
+.topbar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.topbar button {
+    background: transparent;
+    border: 1px solid #00ffcc;
+    color: #00ffcc;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.logout {
+    border-color: red;
+    color: red;
+}
+
+/* WELCOME */
+.welcome {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 28px;
+}
+
+/* TERMINAL */
+.terminal-box {
+    margin-top: 30px;
+    padding: 20px;
+    border: 1px solid #00ffcc;
+    box-shadow: 0 0 20px #00ffcc55;
+    border-radius: 10px;
+    height: 300px;
+    overflow-y: auto;
+}
+
+/* MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0,0,0,0.8);
+
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #050505;
+    padding: 20px;
+    border: 1px solid #00ffcc;
+    box-shadow: 0 0 20px #00ffcc;
+    width: 400px;
+}
+
+.close {
+    float: right;
+    cursor: pointer;
+}

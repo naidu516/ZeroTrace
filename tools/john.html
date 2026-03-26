@@ -1,17 +1,23 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>John the Ripper - ZeroTrace</title>
+<title>John the Ripper Guide - ZeroTrace</title>
 
 <style>
+
 body{
     margin:0;
     background:#000;
     color:#00ffc3;
     font-family:monospace;
     padding:20px;
+    animation:fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(10px);}
+    to{opacity:1; transform:translateY(0);}
 }
 
 /* HEADER */
@@ -21,15 +27,28 @@ body{
     align-items:center;
 }
 
+/* BACK BUTTON */
 .back{
     border:1px solid #00ffc3;
     padding:6px 12px;
     cursor:pointer;
+    transition:0.3s;
+}
+
+.back:hover{
+    background:#00ffc3;
+    color:#000;
+    box-shadow:0 0 10px #00ffc3;
 }
 
 /* SECTION */
 .section{
     margin-top:30px;
+    transition:0.3s;
+}
+
+.section:hover{
+    transform:scale(1.01);
 }
 
 h2{
@@ -41,39 +60,41 @@ h2{
 pre{
     background:#111;
     padding:12px;
-    border-left:3px solid #00ffc3;
     overflow:auto;
+    border-left:3px solid #00ffc3;
 }
+
 </style>
 </head>
 
 <body>
 
 <div class="header">
-<h1>🔓 John the Ripper Guide</h1>
-<div class="back" onclick="window.location.href='tools.html'">⬅ Back</div>
+<h1>🔑 John the Ripper Guide</h1>
+<div class="back" onclick="goBack()">⬅ Back</div>
 </div>
 
-<!-- 1 -->
+<!-- INTRO -->
 <div class="section">
 <h2>1. What is John the Ripper</h2>
 <ul>
-<li>Tool used to crack passwords from hashes</li>
-<li>Supports Linux passwords, ZIP/RAR, databases</li>
-<li>Used in forensics and ethical hacking</li>
+<li>Password cracking tool 🔓</li>
+<li>Used to test password strength</li>
+<li>Supports multiple hash types</li>
+<li>Widely used in cybersecurity & forensics</li>
 </ul>
 </div>
 
 <!-- RULE -->
 <div class="section">
 <h2>⚠️ Important Rule</h2>
-<p>✔ Use only on your files or authorized systems</p>
+<p>✔ Use only on your own systems or labs</p>
 <p>❌ Never crack real user passwords illegally</p>
 </div>
 
 <!-- INSTALL -->
 <div class="section">
-<h2>3. Installation</h2>
+<h2>Install John</h2>
 <pre>
 sudo apt update
 sudo apt install john -y
@@ -84,20 +105,14 @@ sudo apt install john -y
 <div class="section">
 <h2>🟢 Beginner Phase</h2>
 
-<h3>Basic Syntax</h3>
+<h3>Basic Crack</h3>
 <pre>john hash.txt</pre>
 
-<h3>Create Hash File</h3>
-<pre>
-nano hash.txt
-5f4dcc3b5aa765d61d8327deb882cf99
-</pre>
-
-<h3>Run John</h3>
-<pre>john hash.txt</pre>
-
-<h3>Show Password</h3>
+<h3>Show Cracked Password</h3>
 <pre>john --show hash.txt</pre>
+
+<h3>Wordlist Attack</h3>
+<pre>john --wordlist=rockyou.txt hash.txt</pre>
 
 </div>
 
@@ -105,25 +120,17 @@ nano hash.txt
 <div class="section">
 <h2>🟡 Intermediate Phase</h2>
 
-<h3>Wordlist Attack</h3>
-<pre>
-john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt
-</pre>
-
 <h3>Specify Format</h3>
-<pre>
-john --format=raw-md5 hash.txt
-</pre>
+<pre>john --format=raw-md5 hash.txt</pre>
+
+<h3>List Formats</h3>
+<pre>john --list=formats</pre>
 
 <h3>Incremental Mode</h3>
-<pre>
-john --incremental hash.txt
-</pre>
+<pre>john --incremental hash.txt</pre>
 
-<h3>Rules (Smart Attack)</h3>
-<pre>
-john --wordlist=rockyou.txt --rules hash.txt
-</pre>
+<h3>Single Crack Mode</h3>
+<pre>john --single hash.txt</pre>
 
 </div>
 
@@ -131,51 +138,29 @@ john --wordlist=rockyou.txt --rules hash.txt
 <div class="section">
 <h2>🔴 Advanced Phase</h2>
 
-<h3>Linux Password Crack</h3>
-<pre>
-unshadow /etc/passwd /etc/shadow > combined.txt
-john combined.txt
-</pre>
+<h3>Custom Wordlist</h3>
+<pre>john --wordlist=mylist.txt hash.txt</pre>
 
-<h3>ZIP Crack</h3>
-<pre>
-zip2john file.zip > ziphash.txt
-john ziphash.txt
-</pre>
+<h3>Rules (Mutation)</h3>
+<pre>john --wordlist=rockyou.txt --rules hash.txt</pre>
 
-<h3>RAR Crack</h3>
-<pre>
-rar2john file.rar > rarhash.txt
-john rarhash.txt
-</pre>
+<h3>Session Save</h3>
+<pre>john --session=mysession hash.txt</pre>
 
-<h3>Session Save & Resume</h3>
-<pre>
-john --session=mycrack hash.txt
-john --restore=mycrack
-</pre>
-
-<h3>Parallel Cracking</h3>
-<pre>
-john --fork=4 hash.txt
-</pre>
-
-<h3>Pot File</h3>
-<pre>
-john --show hash.txt
-</pre>
+<h3>Restore Session</h3>
+<pre>john --restore=mysession</pre>
 
 </div>
 
 <!-- WORKFLOW -->
 <div class="section">
-<h2>🧠 Real Workflow</h2>
+<h2>🧠 Real Usage Flow</h2>
 <pre>
 1. Get hash
 2. Identify type
-3. Run wordlist
-4. Apply rules
-5. Try brute force
+3. Run wordlist attack
+4. Try incremental
+5. Analyze result
 </pre>
 </div>
 
@@ -183,240 +168,26 @@ john --show hash.txt
 <div class="section">
 <h2>💡 Pro Tips</h2>
 <ul>
-<li>Start with rockyou.txt</li>
-<li>Use rules for better results</li>
-<li>Avoid brute force initially</li>
-</ul>
-</div>
-
-<!-- LEARNING -->
-<div class="section">
-<h2>🚀 Learning Plan</h2>
-<ul>
-<li>Beginner: Basic cracking + wordlists</li>
-<li>Intermediate: Rules + formats</li>
-<li>Advanced: System hashes + performance tuning</li>
+<li>Use strong wordlists (rockyou.txt)</li>
+<li>Always identify hash type first</li>
+<li>Combine with hash-identifier tools</li>
+<li>Be patient — cracking takes time</li>
 </ul>
 </div>
 
 <!-- FINAL -->
 <div class="section">
 <h2>🔥 Final Truth</h2>
-<p>John doesn’t hack passwords.</p>
-<p>👉 It guesses using patterns.</p>
-<p>👉 Better wordlist = better results 💯</p>
+<p>John doesn’t magically hack passwords.</p>
+<p>👉 It guesses based on patterns.</p>
+<p>👉 Strong passwords = harder to crack 💯</p>
 </div>
+
+<script>
+function goBack(){
+    window.location.href = "../tools/tools.html";
+}
+</script>
 
 </body>
-=======
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>John the Ripper - ZeroTrace</title>
-
-<style>
-body{
-    margin:0;
-    background:#000;
-    color:#00ffc3;
-    font-family:monospace;
-    padding:20px;
-}
-
-/* HEADER */
-.header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.back{
-    border:1px solid #00ffc3;
-    padding:6px 12px;
-    cursor:pointer;
-}
-
-/* SECTION */
-.section{
-    margin-top:30px;
-}
-
-h2{
-    border-bottom:1px solid #00ffc3;
-    padding-bottom:5px;
-}
-
-/* CODE BLOCK */
-pre{
-    background:#111;
-    padding:12px;
-    border-left:3px solid #00ffc3;
-    overflow:auto;
-}
-</style>
-</head>
-
-<body>
-
-<div class="header">
-<h1>🔓 John the Ripper Guide</h1>
-<div class="back" onclick="window.location.href='tools.html'">⬅ Back</div>
-</div>
-
-<!-- 1 -->
-<div class="section">
-<h2>1. What is John the Ripper</h2>
-<ul>
-<li>Tool used to crack passwords from hashes</li>
-<li>Supports Linux passwords, ZIP/RAR, databases</li>
-<li>Used in forensics and ethical hacking</li>
-</ul>
-</div>
-
-<!-- RULE -->
-<div class="section">
-<h2>⚠️ Important Rule</h2>
-<p>✔ Use only on your files or authorized systems</p>
-<p>❌ Never crack real user passwords illegally</p>
-</div>
-
-<!-- INSTALL -->
-<div class="section">
-<h2>3. Installation</h2>
-<pre>
-sudo apt update
-sudo apt install john -y
-</pre>
-</div>
-
-<!-- BEGINNER -->
-<div class="section">
-<h2>🟢 Beginner Phase</h2>
-
-<h3>Basic Syntax</h3>
-<pre>john hash.txt</pre>
-
-<h3>Create Hash File</h3>
-<pre>
-nano hash.txt
-5f4dcc3b5aa765d61d8327deb882cf99
-</pre>
-
-<h3>Run John</h3>
-<pre>john hash.txt</pre>
-
-<h3>Show Password</h3>
-<pre>john --show hash.txt</pre>
-
-</div>
-
-<!-- INTERMEDIATE -->
-<div class="section">
-<h2>🟡 Intermediate Phase</h2>
-
-<h3>Wordlist Attack</h3>
-<pre>
-john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt
-</pre>
-
-<h3>Specify Format</h3>
-<pre>
-john --format=raw-md5 hash.txt
-</pre>
-
-<h3>Incremental Mode</h3>
-<pre>
-john --incremental hash.txt
-</pre>
-
-<h3>Rules (Smart Attack)</h3>
-<pre>
-john --wordlist=rockyou.txt --rules hash.txt
-</pre>
-
-</div>
-
-<!-- ADVANCED -->
-<div class="section">
-<h2>🔴 Advanced Phase</h2>
-
-<h3>Linux Password Crack</h3>
-<pre>
-unshadow /etc/passwd /etc/shadow > combined.txt
-john combined.txt
-</pre>
-
-<h3>ZIP Crack</h3>
-<pre>
-zip2john file.zip > ziphash.txt
-john ziphash.txt
-</pre>
-
-<h3>RAR Crack</h3>
-<pre>
-rar2john file.rar > rarhash.txt
-john rarhash.txt
-</pre>
-
-<h3>Session Save & Resume</h3>
-<pre>
-john --session=mycrack hash.txt
-john --restore=mycrack
-</pre>
-
-<h3>Parallel Cracking</h3>
-<pre>
-john --fork=4 hash.txt
-</pre>
-
-<h3>Pot File</h3>
-<pre>
-john --show hash.txt
-</pre>
-
-</div>
-
-<!-- WORKFLOW -->
-<div class="section">
-<h2>🧠 Real Workflow</h2>
-<pre>
-1. Get hash
-2. Identify type
-3. Run wordlist
-4. Apply rules
-5. Try brute force
-</pre>
-</div>
-
-<!-- TIPS -->
-<div class="section">
-<h2>💡 Pro Tips</h2>
-<ul>
-<li>Start with rockyou.txt</li>
-<li>Use rules for better results</li>
-<li>Avoid brute force initially</li>
-</ul>
-</div>
-
-<!-- LEARNING -->
-<div class="section">
-<h2>🚀 Learning Plan</h2>
-<ul>
-<li>Beginner: Basic cracking + wordlists</li>
-<li>Intermediate: Rules + formats</li>
-<li>Advanced: System hashes + performance tuning</li>
-</ul>
-</div>
-
-<!-- FINAL -->
-<div class="section">
-<h2>🔥 Final Truth</h2>
-<p>John doesn’t hack passwords.</p>
-<p>👉 It guesses using patterns.</p>
-<p>👉 Better wordlist = better results 💯</p>
-</div>
-
-</body>
->>>>>>> dc1931d105c0e1f2e0d9ca55c0cb1ea85cb6c61c
 </html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ZeroTrace Login</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.card {
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 40px rgba(0,255,150,0.3);
+}
+
+h1 {
+  color: #00ffcc;
+}
+
+button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  background: #00ffcc;
+  color: black;
+  cursor: pointer;
+  margin-top: 20px;
+  font-weight: bold;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+  <h1>🔐 ZeroTrace</h1>
+  <p>Secure Cyber Tracker</p>
+  <button onclick="googleLogin()">Continue with Google</button>
+</div>
+
+<script type="module" src="assets/js/login.js"></script>
+
+</body>
+</html>

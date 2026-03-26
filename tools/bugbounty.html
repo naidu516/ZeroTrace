@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,58 +6,81 @@
 <title>Bug Bounty Guide</title>
 
 <style>
+
 body {
     margin: 0;
     background: #000;
     color: #00ffcc;
     font-family: monospace;
+    animation: fadeIn 0.6s ease-in-out;
 }
 
+@keyframes fadeIn {
+    from {opacity:0; transform:translateY(10px);}
+    to {opacity:1; transform:translateY(0);}
+}
+
+/* HEADER */
 .header {
     padding: 20px;
     font-size: 26px;
     border-bottom: 1px solid #00ffcc;
+    text-shadow: 0 0 10px #00ffcc;
 }
 
+/* MAIN */
 .main {
     padding: 30px;
 }
 
+/* SECTION */
 .section {
     border: 1px solid #00ffcc;
     padding: 20px;
     margin-bottom: 25px;
     border-radius: 10px;
-    box-shadow: 0 0 15px #00ffcc;
+    box-shadow: 0 0 10px #00ffcc;
+    transition: 0.3s;
+}
+
+.section:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px #00ffcc;
 }
 
 h2 {
     margin-bottom: 10px;
 }
 
+/* CODE BLOCK */
 pre {
     background: #111;
     padding: 12px;
     border-radius: 8px;
 }
 
-.back {
-    text-align: center;
-    margin-top: 50px;
-}
-
+/* BUTTON */
 .btn {
     background: transparent;
     border: 1px solid #00ffcc;
     color: #00ffcc;
     padding: 10px 20px;
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .btn:hover {
     background: #00ffcc;
     color: #000;
+    box-shadow: 0 0 10px #00ffcc;
 }
+
+/* BACK */
+.back {
+    text-align: center;
+    margin-top: 50px;
+}
+
 </style>
 </head>
 
@@ -187,204 +209,9 @@ Data leak
 
 <script>
 function goBack() {
-    window.location.href = "index.html#hub";
+    window.location.href = "../tools/tools.html";
 }
 </script>
 
 </body>
-=======
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bug Bounty Guide</title>
-
-<style>
-body {
-    margin: 0;
-    background: #000;
-    color: #00ffcc;
-    font-family: monospace;
-}
-
-.header {
-    padding: 20px;
-    font-size: 26px;
-    border-bottom: 1px solid #00ffcc;
-}
-
-.main {
-    padding: 30px;
-}
-
-.section {
-    border: 1px solid #00ffcc;
-    padding: 20px;
-    margin-bottom: 25px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px #00ffcc;
-}
-
-h2 {
-    margin-bottom: 10px;
-}
-
-pre {
-    background: #111;
-    padding: 12px;
-    border-radius: 8px;
-}
-
-.back {
-    text-align: center;
-    margin-top: 50px;
-}
-
-.btn {
-    background: transparent;
-    border: 1px solid #00ffcc;
-    color: #00ffcc;
-    padding: 10px 20px;
-    cursor: pointer;
-}
-
-.btn:hover {
-    background: #00ffcc;
-    color: #000;
-}
-</style>
-</head>
-
-<body>
-
-<div class="header">🐞 Bug Bounty Roadmap</div>
-
-<div class="main">
-
-<div class="section">
-<h2>1. What is Bug Bounty</h2>
-<p>Companies pay you 💰 for finding vulnerabilities.</p>
-<p>Platforms: HackerOne, Bugcrowd, Intigriti</p>
-</div>
-
-<div class="section">
-<h2>2. Mindset</h2>
-<p>Think like developer + attacker</p>
-<p>Be patient</p>
-<p>Understand deeply</p>
-</div>
-
-<div class="section">
-<h2>PHASE 1: Beginner</h2>
-<p>Learn HTTP/HTTPS, Request/Response, Linux basics</p>
-<p>Tools: Burp Suite, Nmap, Wireshark</p>
-<p>Learn vulnerabilities: XSS, SQLi, IDOR</p>
-</div>
-
-<div class="section">
-<h2>Practice Platforms</h2>
-<p>PortSwigger Labs</p>
-<p>TryHackMe</p>
-<p>Hack The Box</p>
-</div>
-
-<div class="section">
-<h2>PHASE 2: Intermediate</h2>
-<p>Intercept traffic using Burp</p>
-<p>Test parameters</p>
-
-<pre>
-' OR 1=1 --
-/api/user?id=2
-price=1
-</pre>
-</div>
-
-<div class="section">
-<h2>Analyze Responses</h2>
-<p>Status codes, errors, leaks</p>
-</div>
-
-<div class="section">
-<h2>PHASE 3: Advanced</h2>
-<p>Logic bugs, auth bypass, API testing</p>
-
-<pre>
-GET /api/user
-Authorization: Bearer token
-</pre>
-</div>
-
-<div class="section">
-<h2>Automation</h2>
-<p>Burp Intruder, Wordlists</p>
-<p>Extensions: Logger++, Turbo Intruder</p>
-</div>
-
-<div class="section">
-<h2>PHASE 4: Real Hunting</h2>
-<p>Choose program → Read scope → Test deeply</p>
-</div>
-
-<div class="section">
-<h2>Report Example</h2>
-<pre>
-Title: IDOR
-
-Steps:
-Change ID → access data
-
-Impact:
-Data leak
-</pre>
-</div>
-
-<div class="section">
-<h2>Earnings</h2>
-<p>Low: ₹1k–₹10k</p>
-<p>Medium: ₹10k–₹1L</p>
-<p>High: ₹1L+</p>
-</div>
-
-<div class="section">
-<h2>Daily Plan</h2>
-<p>1 hr learning</p>
-<p>2 hr labs</p>
-<p>1 hr testing</p>
-</div>
-
-<div class="section">
-<h2>Rules</h2>
-<p>✔ Authorized only</p>
-<p>❌ No illegal hacking</p>
-</div>
-
-<div class="section">
-<h2>Pro Tips</h2>
-<p>Focus on one bug</p>
-<p>Manual testing > tools</p>
-</div>
-
-<div class="section">
-<h2>Final Truth</h2>
-<p>👉 First bug is hardest</p>
-<p>👉 Then everything becomes easier 💯</p>
-</div>
-
-<!-- BACK BUTTON -->
-<div class="back">
-<button class="btn" onclick="goBack()">← Back to Hub</button>
-</div>
-
-</div>
-
-<script>
-function goBack() {
-    window.location.href = "index.html#hub";
-}
-</script>
-
-</body>
->>>>>>> dc1931d105c0e1f2e0d9ca55c0cb1ea85cb6c61c
 </html>

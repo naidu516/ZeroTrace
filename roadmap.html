@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,12 +5,19 @@
 <title>ZeroTrace Roadmap</title>
 
 <style>
+
 body {
     background: #050505;
     color: #00ffcc;
     font-family: monospace;
     margin: 0;
     padding: 20px;
+    animation:fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(10px);}
+    to{opacity:1; transform:translateY(0);}
 }
 
 h1 {
@@ -30,6 +36,7 @@ h1 {
 
 .phase:hover {
     box-shadow: 0 0 25px #00ffcc, 0 0 50px #00ffcc;
+    transform: scale(1.01);
 }
 
 h2 {
@@ -39,12 +46,6 @@ h2 {
 ul {
     margin-top: 10px;
     line-height: 1.6;
-}
-
-.section-title {
-    margin-top: 40px;
-    font-size: 20px;
-    text-shadow: 0 0 5px #00ffcc;
 }
 
 /* TABLE */
@@ -65,7 +66,7 @@ th {
     color: black;
 }
 
-/* BUTTON */
+/* BACK BUTTON */
 .back {
     text-align: center;
     margin-top: 40px;
@@ -77,6 +78,7 @@ button {
     background: transparent;
     color: #00ffcc;
     cursor: pointer;
+    transition:0.3s;
 }
 
 button:hover {
@@ -84,6 +86,7 @@ button:hover {
     color: black;
     box-shadow: 0 0 15px #00ffcc;
 }
+
 </style>
 </head>
 
@@ -91,10 +94,8 @@ button:hover {
 
 <h1>🧭 ZeroTrace Cybersecurity Roadmap (0 → ₹1L+)</h1>
 
-<!-- PHASE 1 -->
 <div class="phase">
 <h2>🟢 Phase 1: Foundation (0–3 Months)</h2>
-
 <p><b>Goal:</b> Learn basics + Linux + Networking</p>
 
 <ul>
@@ -105,7 +106,6 @@ button:hover {
 
 <p><b>Tools:</b> Kali Linux, Wireshark, Nmap</p>
 
-<p><b>Commands:</b></p>
 <pre>
 ls
 cd
@@ -117,17 +117,9 @@ ip a
 nmap -sV &lt;target&gt;
 </pre>
 
-<p><b>Projects:</b></p>
-<ul>
-<li>Network scanner using Nmap</li>
-<li>Packet analysis using Wireshark</li>
-<li>Kali Linux lab setup</li>
-</ul>
-
 <p><b>Salary:</b> ₹10K – ₹20K/month</p>
 </div>
 
-<!-- PHASE 2 -->
 <div class="phase">
 <h2>🟡 Phase 2: Core Skills (3–6 Months)</h2>
 
@@ -139,93 +131,58 @@ nmap -sV &lt;target&gt;
 
 <p><b>Tools:</b> Burp Suite, SQLMap, Gobuster</p>
 
-<p><b>Projects:</b></p>
-<ul>
-<li>Vulnerable website (DVWA clone)</li>
-<li>SQL Injection demo</li>
-<li>Password cracking (John the Ripper)</li>
-</ul>
-
 <p><b>Salary:</b> ₹20K – ₹40K/month</p>
 </div>
 
-<!-- PHASE 3 -->
 <div class="phase">
 <h2>🔵 Phase 3: Specialization (6–12 Months)</h2>
 
-<p><b>Choose your path:</b></p>
-
 <ul>
 <li>🔐 Penetration Testing</li>
-<li>🧠 Digital Forensics (🔥 Recommended)</li>
+<li>🧠 Digital Forensics</li>
 <li>🛡 SOC Analyst</li>
-</ul>
-
-<p><b>Forensics Tools:</b> Autopsy, FTK Imager, Volatility</p>
-
-<p><b>Projects:</b></p>
-<ul>
-<li>Investigate hacked system</li>
-<li>Recover deleted files</li>
-<li>Memory dump analysis</li>
 </ul>
 
 <p><b>Salary:</b> ₹40K – ₹1L/month</p>
 </div>
 
-<!-- PROJECTS -->
 <div class="phase">
 <h2>🔥 Must-Have Projects</h2>
-
 <ul>
-<li>ZeroTrace (your platform)</li>
+<li>ZeroTrace platform</li>
 <li>Bug bounty tracker</li>
-<li>Custom vulnerable lab</li>
-<li>Network monitoring tool</li>
-<li>Forensics case study</li>
+<li>Custom lab</li>
+<li>Network monitor</li>
 </ul>
 </div>
 
-<!-- INTERNSHIPS -->
 <div class="phase">
 <h2>💼 Internship Strategy</h2>
-
 <ul>
-<li>Create LinkedIn, GitHub, HackerOne</li>
-<li>Post daily learning</li>
-<li>Apply on Internshala & LinkedIn</li>
-<li>Cold DM recruiters</li>
+<li>LinkedIn + GitHub</li>
+<li>Post daily</li>
+<li>Apply & DM recruiters</li>
 </ul>
 </div>
 
-<!-- RESUME -->
 <div class="phase">
 <h2>📄 Resume Structure</h2>
-
 <ul>
-<li>Header (Name, Email, GitHub)</li>
-<li>Objective</li>
-<li>Skills (Nmap, Wireshark, Burp)</li>
-<li>Projects (VERY IMPORTANT)</li>
+<li>Skills + Projects (important)</li>
 <li>Certifications</li>
-<li>Experience</li>
 <li>Achievements</li>
 </ul>
 </div>
 
-<!-- DAILY ROUTINE -->
 <div class="phase">
 <h2>🧠 Daily Routine</h2>
-
 <ul>
-<li>2 hrs → Learning</li>
-<li>2 hrs → Practice (Kali)</li>
-<li>1 hr → Build project</li>
-<li>30 min → LinkedIn post</li>
+<li>2 hr learning</li>
+<li>2 hr practice</li>
+<li>1 hr project</li>
 </ul>
 </div>
 
-<!-- SALARY TABLE -->
 <div class="phase">
 <h2>💰 Salary Growth</h2>
 
@@ -263,304 +220,15 @@ nmap -sV &lt;target&gt;
 </table>
 </div>
 
-<!-- FINAL -->
 <div class="phase">
 <h2>⚡ Final Truth</h2>
-
-<p>
-If you only watch tutorials → ❌ No job  
-If you build + practice daily → ✅ ₹1L job is real  
-</p>
-
+<p>If you only watch → ❌ No job</p>
+<p>If you build daily → ✅ ₹1L job is real</p>
 </div>
 
-<!-- BACK -->
 <div class="back">
 <button onclick="window.location.href='index.html'">⬅ Back to Dashboard</button>
 </div>
 
 </body>
-=======
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>ZeroTrace Roadmap</title>
-
-<style>
-body {
-    background: #050505;
-    color: #00ffcc;
-    font-family: monospace;
-    margin: 0;
-    padding: 20px;
-}
-
-h1 {
-    text-align: center;
-    text-shadow: 0 0 10px #00ffcc;
-}
-
-.phase {
-    border: 1px solid #00ffcc;
-    padding: 20px;
-    margin: 25px 0;
-    border-radius: 10px;
-    box-shadow: 0 0 15px #00ffcc44;
-    transition: 0.3s;
-}
-
-.phase:hover {
-    box-shadow: 0 0 25px #00ffcc, 0 0 50px #00ffcc;
-}
-
-h2 {
-    color: #00ffcc;
-}
-
-ul {
-    margin-top: 10px;
-    line-height: 1.6;
-}
-
-.section-title {
-    margin-top: 40px;
-    font-size: 20px;
-    text-shadow: 0 0 5px #00ffcc;
-}
-
-/* TABLE */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-}
-
-td, th {
-    border: 1px solid #00ffcc;
-    padding: 10px;
-    text-align: center;
-}
-
-th {
-    background: #00ffcc;
-    color: black;
-}
-
-/* BUTTON */
-.back {
-    text-align: center;
-    margin-top: 40px;
-}
-
-button {
-    padding: 10px 25px;
-    border: 1px solid #00ffcc;
-    background: transparent;
-    color: #00ffcc;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #00ffcc;
-    color: black;
-    box-shadow: 0 0 15px #00ffcc;
-}
-</style>
-</head>
-
-<body>
-
-<h1>🧭 ZeroTrace Cybersecurity Roadmap (0 → ₹1L+)</h1>
-
-<!-- PHASE 1 -->
-<div class="phase">
-<h2>🟢 Phase 1: Foundation (0–3 Months)</h2>
-
-<p><b>Goal:</b> Learn basics + Linux + Networking</p>
-
-<ul>
-<li>Networking: IP, DNS, TCP/UDP</li>
-<li>Linux + Windows basics</li>
-<li>Cybersecurity fundamentals</li>
-</ul>
-
-<p><b>Tools:</b> Kali Linux, Wireshark, Nmap</p>
-
-<p><b>Commands:</b></p>
-<pre>
-ls
-cd
-pwd
-mkdir
-rm
-ifconfig
-ip a
-nmap -sV &lt;target&gt;
-</pre>
-
-<p><b>Projects:</b></p>
-<ul>
-<li>Network scanner using Nmap</li>
-<li>Packet analysis using Wireshark</li>
-<li>Kali Linux lab setup</li>
-</ul>
-
-<p><b>Salary:</b> ₹10K – ₹20K/month</p>
-</div>
-
-<!-- PHASE 2 -->
-<div class="phase">
-<h2>🟡 Phase 2: Core Skills (3–6 Months)</h2>
-
-<ul>
-<li>HTML, JS, HTTP basics</li>
-<li>OWASP Top 10</li>
-<li>Basic vulnerabilities</li>
-</ul>
-
-<p><b>Tools:</b> Burp Suite, SQLMap, Gobuster</p>
-
-<p><b>Projects:</b></p>
-<ul>
-<li>Vulnerable website (DVWA clone)</li>
-<li>SQL Injection demo</li>
-<li>Password cracking (John the Ripper)</li>
-</ul>
-
-<p><b>Salary:</b> ₹20K – ₹40K/month</p>
-</div>
-
-<!-- PHASE 3 -->
-<div class="phase">
-<h2>🔵 Phase 3: Specialization (6–12 Months)</h2>
-
-<p><b>Choose your path:</b></p>
-
-<ul>
-<li>🔐 Penetration Testing</li>
-<li>🧠 Digital Forensics (🔥 Recommended)</li>
-<li>🛡 SOC Analyst</li>
-</ul>
-
-<p><b>Forensics Tools:</b> Autopsy, FTK Imager, Volatility</p>
-
-<p><b>Projects:</b></p>
-<ul>
-<li>Investigate hacked system</li>
-<li>Recover deleted files</li>
-<li>Memory dump analysis</li>
-</ul>
-
-<p><b>Salary:</b> ₹40K – ₹1L/month</p>
-</div>
-
-<!-- PROJECTS -->
-<div class="phase">
-<h2>🔥 Must-Have Projects</h2>
-
-<ul>
-<li>ZeroTrace (your platform)</li>
-<li>Bug bounty tracker</li>
-<li>Custom vulnerable lab</li>
-<li>Network monitoring tool</li>
-<li>Forensics case study</li>
-</ul>
-</div>
-
-<!-- INTERNSHIPS -->
-<div class="phase">
-<h2>💼 Internship Strategy</h2>
-
-<ul>
-<li>Create LinkedIn, GitHub, HackerOne</li>
-<li>Post daily learning</li>
-<li>Apply on Internshala & LinkedIn</li>
-<li>Cold DM recruiters</li>
-</ul>
-</div>
-
-<!-- RESUME -->
-<div class="phase">
-<h2>📄 Resume Structure</h2>
-
-<ul>
-<li>Header (Name, Email, GitHub)</li>
-<li>Objective</li>
-<li>Skills (Nmap, Wireshark, Burp)</li>
-<li>Projects (VERY IMPORTANT)</li>
-<li>Certifications</li>
-<li>Experience</li>
-<li>Achievements</li>
-</ul>
-</div>
-
-<!-- DAILY ROUTINE -->
-<div class="phase">
-<h2>🧠 Daily Routine</h2>
-
-<ul>
-<li>2 hrs → Learning</li>
-<li>2 hrs → Practice (Kali)</li>
-<li>1 hr → Build project</li>
-<li>30 min → LinkedIn post</li>
-</ul>
-</div>
-
-<!-- SALARY TABLE -->
-<div class="phase">
-<h2>💰 Salary Growth</h2>
-
-<table>
-<tr>
-<th>Stage</th>
-<th>Time</th>
-<th>Salary</th>
-</tr>
-
-<tr>
-<td>Beginner</td>
-<td>0–6 months</td>
-<td>₹10K–₹30K</td>
-</tr>
-
-<tr>
-<td>Intermediate</td>
-<td>6–12 months</td>
-<td>₹30K–₹70K</td>
-</tr>
-
-<tr>
-<td>Advanced</td>
-<td>1–2 years</td>
-<td>₹70K–₹1.5L</td>
-</tr>
-
-<tr>
-<td>Pro</td>
-<td>2+ years</td>
-<td>₹2L+</td>
-</tr>
-
-</table>
-</div>
-
-<!-- FINAL -->
-<div class="phase">
-<h2>⚡ Final Truth</h2>
-
-<p>
-If you only watch tutorials → ❌ No job  
-If you build + practice daily → ✅ ₹1L job is real  
-</p>
-
-</div>
-
-<!-- BACK -->
-<div class="back">
-<button onclick="window.location.href='index.html'">⬅ Back to Dashboard</button>
-</div>
-
-</body>
->>>>>>> dc1931d105c0e1f2e0d9ca55c0cb1ea85cb6c61c
 </html>
