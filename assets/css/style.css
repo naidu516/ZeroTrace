@@ -108,3 +108,169 @@ body {
     float: right;
     cursor: pointer;
 }
+/* MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+
+    .sidebar {
+        width: 60px;
+        padding: 10px;
+    }
+
+    .sidebar h2 {
+        font-size: 12px;
+        text-align: center;
+    }
+
+    .sidebar ul li {
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    .main {
+        margin-left: 60px;
+        padding: 10px;
+    }
+
+    .welcome {
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .terminal-box {
+        width: 100%;
+        height: auto;
+        padding: 10px;
+    }
+
+    .topbar {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .sidebar h2 {
+    display: none;
+}
+.sidebar ul li {
+    text-align: center;
+}
+}
+.sidebar,
+.main,
+.terminal-box {
+    transition: all 0.3s ease;
+}
+/* GLOBAL */
+body {
+    background: #0a0f14;
+    color: #00ffcc;
+    font-family: 'Courier New', monospace;
+    margin: 0;
+    padding: 0;
+}
+
+/* TITLE */
+h1 {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 28px;
+}
+
+/* LABS PAGE */
+.labs-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 60px;
+    flex-wrap: wrap;
+}
+
+/* CARD */
+.lab-card {
+    width: 300px;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #00ffcc;
+    text-align: center;
+    background: rgba(0, 255, 204, 0.05);
+    box-shadow: 0 0 20px rgba(0,255,204,0.2);
+    transition: 0.3s;
+}
+
+.lab-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 25px #00ffcc;
+}
+
+/* BUTTON */
+.lab-card button {
+    margin-top: 15px;
+    padding: 10px 16px;
+    background: transparent;
+    border: 1px solid #00ffcc;
+    color: #00ffcc;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.lab-card button:hover {
+    background: #00ffcc;
+    color: black;
+}
+
+/* LAB PAGE */
+.lab-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 85vh;
+}
+
+/* TERMINAL BOX */
+.terminal-box {
+    width: 420px;
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid #00ffcc;
+    box-shadow: 0 0 20px rgba(0,255,204,0.3);
+    text-align: center;
+}
+
+/* INPUT */
+input {
+    width: 90%;
+    padding: 12px;
+    margin-top: 10px;
+    background: transparent;
+    border: 1px solid #00ffcc;
+    color: #00ffcc;
+    border-radius: 6px;
+}
+
+/* BUTTON GLOBAL */
+button {
+    margin-top: 15px;
+    padding: 10px 16px;
+    background: transparent;
+    border: 1px solid #00ffcc;
+    color: #00ffcc;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+button:hover {
+    background: #00ffcc;
+    color: black;
+}
+/* ===== PRACTICE PAGE FIX ===== */
+.labs-wrapper {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .labs-wrapper {
+        padding: 20px;
+        align-items: flex-start;
+    }
+}

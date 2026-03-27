@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brute Force Lab - ZeroTrace</title>
+
+<style>
+body {
+    margin: 0;
+    background: #0a0f1c;
+    font-family: 'Courier New', monospace;
+    color: #00fff7;
+}
+
+/* CENTER */
+.bf-wrapper {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* BOX */
+.bf-container {
+    width: 100%;
+    max-width: 500px;
+    border: 1px solid #00fff7;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(0,255,247,0.3);
+    backdrop-filter: blur(10px);
+    text-align: center;
+}
+
+/* INPUT */
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    background: transparent;
+    border: 1px solid #00fff7;
+    color: #00fff7;
+    border-radius: 6px;
+}
+
+/* BUTTONS */
+.btns {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+button {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #00fff7;
+    background: transparent;
+    color: #00fff7;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #00fff7;
+    color: #000;
+}
+
+/* STATUS */
+.status {
+    margin-top: 15px;
+    font-size: 14px;
+    min-height: 20px;
+}
+
+.success { color: #00ff88; }
+.error { color: red; }
+.warning { color: orange; }
+
+/* PROGRESS */
+.progress {
+    margin-top: 10px;
+    height: 6px;
+    background: #111;
+    border-radius: 5px;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: #00fff7;
+}
+
+/* INFO */
+.info {
+    margin-top: 15px;
+    font-size: 13px;
+    opacity: 0.7;
+}
+</style>
+</head>
+
+<body>
+
+<div class="bf-wrapper">
+<div class="bf-container">
+
+<h2>🔐 Brute Force Lab</h2>
+<p>Target Login System</p>
+
+<input id="username" placeholder="Username">
+<input id="password" placeholder="Password">
+
+<div class="btns">
+<button onclick="attemptLogin()">Attempt</button>
+<button onclick="startBruteForce()">Auto Attack</button>
+<button onclick="reset()">Reset</button>
+</div>
+
+<div class="progress">
+<div class="progress-bar" id="progress"></div>
+</div>
+
+<div class="status" id="status"></div>
+
+<div class="info">
+💡 Hint: Username is common... Password is 4 digits  
+<br>🎯 Score: <span id="score">0</span>
+</div>
+
+</div>
+</div>
+
+<!-- 🔥 PROGRESS TRACK -->
+<script src="../assets/js/progress.js"></script>
+
+<script>
+let correctUser = "admin";
+let correctPass = "1234";
+
+let attempts = 0;
+let running = false;
+let locked = false;
+let score = 0;
+
+/* LOGIN */
+function attemptLogin(){
+
+if(locked){
+    status.innerHTML = "🔒 Locked! Wait...";
+    status.className = "status warning";
+    return;
+}
+
+let u = username.value;
+let p = password.value;
+
+attempts++;
+
+if(u === correctUser && p === correctPass){
+
+    status.innerHTML = "✅ Access Granted ("+attempts+" attempts)";
+    status.className = "status success";
+
+    score += Math.max(100 - attempts*5, 10);
+    document.getElementById("score").innerText = score;
+
+    // 🔥 SAVE PROGRESS
+    completeLab("bruteforce");
+
+} else {
+
+    status.innerHTML = "❌ Wrong ("+attempts+")";
+    status.className = "status error";
+
+    if(attempts >= 5){
+        triggerLockout();
+    }
+}
+
+updateProgress();
+}
+
+/* AUTO ATTACK */
+function startBruteForce(){
+
+if(running || locked) return;
+
+running = true;
+
+let users = ["admin","root","user"];
+let passList = ["0000","1111","2222","1234","9999"];
+
+let i = 0;
+
+let interval = setInterval(()=>{
+
+if(locked){
+    clearInterval(interval);
+    running = false;
+    return;
+}
+
+let user = users[Math.floor(Math.random()*users.length)];
+let pass = passList[i];
+
+username.value = user;
+password.value = pass;
+
+attempts++;
+
+status.innerHTML = "💀 Trying: "+user+" / "+pass+" ("+attempts+")";
+
+updateProgress();
+
+if(user === correctUser && pass === correctPass){
+
+    status.innerHTML = "🔥 HACKED! Password = "+pass;
+    status.className = "status success";
+
+    score += 150;
+    document.getElementById("score").innerText = score;
+
+    // 🔥 SAVE PROGRESS
+    completeLab("bruteforce");
+
+    clearInterval(interval);
+    running = false;
+}
+
+i++;
+if(i >= passList.length) i = 0;
+
+},800);
+}
+
+/* LOCKOUT */
+function triggerLockout(){
+locked = true;
+
+status.innerHTML = "🚫 Too many attempts! Locked 5 sec";
+status.className = "status warning";
+
+setTimeout(()=>{
+    locked = false;
+    attempts = 0;
+    status.innerHTML = "🔓 Unlocked";
+},5000);
+}
+
+/* PROGRESS BAR */
+function updateProgress(){
+let percent = Math.min((attempts/10)*100,100);
+document.getElementById("progress").style.width = percent + "%";
+}
+
+/* RESET */
+function reset(){
+attempts = 0;
+running = false;
+locked = false;
+username.value = "";
+password.value = "";
+status.innerHTML = "";
+document.getElementById("progress").style.width = "0%";
+}
+</script>
+
+</body>
+</html>
