@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ZeroTrace Burp Lab</title>
+
+<style>
+body{margin:0;background:black;color:#00ff9f;font-family:monospace;}
+.terminal{padding:20px;height:90vh;overflow-y:auto;}
+.input-line{display:flex;padding:10px;border-top:1px solid #00ff9f;}
+input{background:black;border:none;color:#00ff9f;width:100%;outline:none;}
+p{margin:4px 0;text-shadow:0 0 5px #00ff9f;}
+</style>
+</head>
+
+<body>
+
+<div id="terminal" class="terminal"></div>
+
+<div class="input-line">
+<span id="prompt">zerotrace@burp:~$</span>
+<input id="cmd" onkeydown="run(event)" autofocus>
+</div>
+
+<script>
+
+let mode="attack";
+let started=false;
+let intercepted=false;
+
+function print(t){
+ let p=document.createElement("p");
+ p.innerHTML=t;
+ terminal.appendChild(p);
+ terminal.scrollTop=terminal.scrollHeight;
+}
+
+function run(e){
+ if(e.key==="Enter"){
+  let cmd=cmdInput.value.trim();
+  print(prompt.innerText+" "+cmd);
+  cmdInput.value="";
+  handle(cmd.toLowerCase());
+ }
+}
+
+const terminal=document.getElementById("terminal");
+const cmdInput=document.getElementById("cmd");
+const prompt=document.getElementById("prompt");
+
+function init(){
+ terminal.innerHTML="";
+ print("🔐 ZeroTrace Terminal");
+ print("📌 Burp Suite Lab");
+ print("");
+ print("🎯 Intercept and modify HTTP request");
+ print("");
+ print("Type help");
+}
+
+// COMMANDS
+function handle(cmd){
+
+ // ALIASES
+ if(cmd==="start intercepting") cmd="intercept";
+
+ if(cmd==="help"){
+  print("");
+  print("Commands:");
+  print("");
+  print("start              → start proxy");
+  print("intercept          → capture request");
+  print("modify             → edit request");
+  print("forward            → send request");
+  print("");
+  print("mode defense       → block attack");
+  print("mode attack        → allow attack");
+  print("");
+  print("status             → show state");
+  print("reset              → restart lab");
+  print("");
+ }
+
+ else if(cmd==="status"){
+  print("");
+  print("📊 Status:");
+  print("Mode: "+mode);
+  print("Started: "+(started?"Yes":"No"));
+  print("Intercept: "+(intercepted?"ON":"OFF"));
+ }
+
+ else if(cmd==="reset"){
+  started=false;
+  intercepted=false;
+  init();
+  print("🔁 Lab reset");
+ }
+
+ else if(cmd==="mode defense"){
+  mode="defense";
+  print("🛡️ Defense Mode ON");
+ }
+
+ else if(cmd==="mode attack"){
+  mode="attack";
+  print("💀 Attack Mode ON");
+ }
+
+ else if(cmd==="start"){
+  started=true;
+  print("");
+  print("🔄 Burp Proxy Started...");
+  print("Intercept is OFF");
+ }
+
+ else if(cmd==="intercept"){
+
+  if(!started){
+   print("❌ Start first");
+   return;
+  }
+
+  intercepted=true;
+
+  print("");
+  print("📡 Intercept ON");
+  print("POST /login HTTP/1.1");
+  print("username=admin&password=wrong");
+ }
+
+ else if(cmd==="modify"){
+
+  if(!intercepted){
+   print("❌ No request");
+   return;
+  }
+
+  if(mode==="defense"){
+   print("🚫 Blocked by security");
+   return;
+  }
+
+  print("");
+  print("✏️ Modifying...");
+  setTimeout(()=>print("password=admin"),1000);
+  setTimeout(()=>print("✔ Injected"),2000);
+ }
+
+ else if(cmd==="forward"){
+
+  if(mode==="defense"){
+   print("🚫 Request blocked!");
+   return;
+  }
+
+  if(!intercepted){
+   print("❌ Nothing to send");
+   return;
+  }
+
+  print("");
+  print("🚀 Sending...");
+  setTimeout(()=>print("200 OK"),1000);
+  setTimeout(()=>print("🔥 Access Granted"),2000);
+ }
+
+ else{
+  print("Command not found");
+ }
+
+}
+
+init();
+
+</script>
+</body>
+</html>

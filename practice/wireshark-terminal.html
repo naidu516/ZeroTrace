@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ZeroTrace Wireshark Lab</title>
+
+<style>
+body {
+    margin:0;
+    background:black;
+    color:#00ff9f;
+    font-family:monospace;
+}
+
+.terminal {
+    padding:20px;
+    height:90vh;
+    overflow-y:auto;
+}
+
+.input-line {
+    display:flex;
+    padding:10px;
+    border-top:1px solid #00ff9f;
+}
+
+.prompt {
+    margin-right:5px;
+}
+
+input {
+    background:black;
+    border:none;
+    color:#00ff9f;
+    outline:none;
+    width:100%;
+}
+
+p {
+    margin:4px 0;
+    text-shadow:0 0 5px #00ff9f;
+}
+</style>
+</head>
+
+<body>
+
+<div class="terminal" id="terminal"></div>
+
+<div class="input-line">
+<span class="prompt">zerotrace@wireshark:~$</span>
+<input id="cmd" autofocus onkeydown="run(event)">
+</div>
+
+<script>
+
+let started = false;
+let capturing = false;
+let mode = "attack";
+
+// PRINT
+function print(text){
+    let p = document.createElement("p");
+    p.innerHTML = text;
+    terminal.appendChild(p);
+    terminal.scrollTop = terminal.scrollHeight;
+}
+
+const terminal = document.getElementById("terminal");
+const input = document.getElementById("cmd");
+
+// INIT
+function init(){
+    terminal.innerHTML = "";
+
+    print("🔐 ZeroTrace Terminal");
+    print("📌 Wireshark Lab");
+    print("");
+    print("🎯 Objective: Capture packets and analyze credentials");
+    print("");
+    print("👉 Type: help");
+}
+
+// INPUT
+function run(e){
+    if(e.key === "Enter"){
+        let cmd = input.value.trim();
+        print("zerotrace@wireshark:~$ " + cmd);
+        input.value = "";
+        handle(cmd.toLowerCase());
+    }
+}
+
+// COMMAND HANDLER
+function handle(cmd){
+
+    if(cmd === "help"){
+        print("");
+        print("📜 Commands:");
+        print("");
+        print("start                   → initialize capture");
+        print("capture start           → begin packet capture");
+        print("analyze http            → filter HTTP traffic");
+        print("extract creds           → find credentials");
+        print("");
+        print("mode defense            → block sniffing");
+        print("mode attack             → allow capture");
+        print("");
+        print("status                  → show state");
+        print("clear                   → clear terminal");
+        print("");
+    }
+
+    else if(cmd === "mode defense"){
+        mode = "defense";
+        print("🛡️ Defense Mode ON (traffic encrypted)");
+    }
+
+    else if(cmd === "mode attack"){
+        mode = "attack";
+        print("💀 Attack Mode ON");
+    }
+
+    else if(cmd === "status"){
+        print("");
+        print("📊 Status:");
+        print("Started: " + (started ? "Yes" : "No"));
+        print("Capturing: " + (capturing ? "Running" : "Stopped"));
+        print("Mode: " + mode);
+    }
+
+    else if(cmd === "clear"){
+        terminal.innerHTML = "";
+    }
+
+    else if(cmd === "start"){
+        started = true;
+        print("");
+        print("⚙️ Initializing Wireshark...");
+        print("Interface: eth0 ✔");
+    }
+
+    else if(cmd === "capture start"){
+
+        if(mode === "defense"){
+            print("🚫 Traffic is encrypted (HTTPS)");
+            return;
+        }
+
+        if(!started){
+            print("❌ Run 'start' first");
+            return;
+        }
+
+        if(capturing){
+            print("⚠️ Capture already running");
+            return;
+        }
+
+        capturing = true;
+
+        print("");
+        print("📡 Capturing packets...");
+
+        const packets = [
+            "HTTP GET /login",
+            "HTTP POST /login",
+            "username=admin&password=1234 🔥",
+            "HTTP 200 OK",
+            "Session cookie detected 💀"
+        ];
+
+        let i = 0;
+
+        const interval = setInterval(() => {
+            if(i < packets.length){
+                print(packets[i]);
+                i++;
+            } else {
+                clearInterval(interval);
+                print("");
+                print("✅ Capture Completed!");
+            }
+        }, 800);
+    }
+
+    else if(cmd === "analyze http"){
+        print("");
+        print("🔍 Filtering HTTP traffic...");
+        print("Found login request 🔥");
+    }
+
+    else if(cmd === "extract creds"){
+
+        if(mode === "defense"){
+            print("🚫 Credentials protected (HTTPS)");
+            return;
+        }
+
+        print("");
+        print("💀 Extracting credentials...");
+        setTimeout(() => print("username: admin"), 800);
+        setTimeout(() => print("password: 1234 🔥"), 1600);
+        setTimeout(() => print("Session hijack possible"), 2400);
+    }
+
+    else{
+        print("Command not found");
+    }
+}
+
+// INIT CALL
+init();
+
+</script>
+
+</body>
+</html>

@@ -1,276 +1,157 @@
+/* ===== GLOBAL ===== */
 body {
     margin: 0;
+    background: black; /* 🔥 FIX WHITE ISSUE */
+    color: #00ff9f;
     font-family: monospace;
-    background: #0a0a0a;
-    color: #00ffcc;
     display: flex;
-}
-
-/* SIDEBAR */
-.sidebar {
-    width: 220px;
     height: 100vh;
+    overflow: hidden;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+    width: 250px;
     background: #050505;
-    padding: 20px;
-    box-shadow: 0 0 20px #00ffcc33;
+    border-right: 1px solid #00ff9f;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 15px;
 }
 
-.sidebar h2 {
-    margin-bottom: 30px;
-}
-
+/* Sidebar items */
 .sidebar ul {
     list-style: none;
     padding: 0;
 }
 
 .sidebar li {
-    padding: 12px;
-    margin-bottom: 15px;
+    padding: 10px;
     cursor: pointer;
-    border-radius: 8px;
-    transition: 0.3s;
 }
 
 .sidebar li:hover {
-    background: #00ffcc22;
-    box-shadow: 0 0 10px #00ffcc;
+    background: #002b1f;
 }
 
-/* MAIN */
+/* ===== MAIN ===== */
 .main {
     flex: 1;
-    padding: 40px;
+    position: relative;
+    padding: 20px;
 }
 
-/* TOPBAR */
+/* ===== TOPBAR ===== */
 .topbar {
     display: flex;
-    justify-content: flex-end;
     gap: 10px;
+    margin-bottom: 10px;
 }
 
-.topbar button {
+/* Buttons */
+button {
     background: transparent;
-    border: 1px solid #00ffcc;
-    color: #00ffcc;
+    color: #00ff9f;
+    border: 1px solid #00ff9f;
     padding: 8px 12px;
     cursor: pointer;
 }
 
-.logout {
-    border-color: red;
-    color: red;
+button:hover {
+    background: #002b1f;
 }
 
-/* WELCOME */
-.welcome {
+/* ===== WELCOME ===== */
+#welcome {
     text-align: center;
-    margin-top: 20px;
-    font-size: 28px;
+    font-size: 26px;
+    margin-top: 10px;
 }
 
-/* TERMINAL */
+/* ===== TERMINAL CENTER ===== */
 .terminal-box {
-    margin-top: 30px;
-    padding: 20px;
-    border: 1px solid #00ffcc;
-    box-shadow: 0 0 20px #00ffcc55;
-    border-radius: 10px;
-    height: 300px;
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 550px;
+    max-width: 90%;
+    height: 65vh;
+
+    border: 1px solid #00ff9f;
+    padding: 15px;
+
+    background: black;
     overflow-y: auto;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 0 10px #00ff9f,
+        0 0 25px #00ff9f;
 }
 
-/* MODAL */
-.modal {
-    display: none;
+/* ===== TERMINAL TEXT ===== */
+#terminal p {
+    margin: 4px 0;
+}
+
+/* ===== INPUT ===== */
+#cmdInput {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 550px;
+    max-width: 90%;
+
+    padding: 10px;
+    background: black;
+    border: 1px solid #00ff9f;
+    color: #00ff9f;
+}
+
+/* ===== MODAL ===== */
+.overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-
-    background: rgba(0,0,0,0.8);
-
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background: #050505;
-    padding: 20px;
-    border: 1px solid #00ffcc;
-    box-shadow: 0 0 20px #00ffcc;
-    width: 400px;
-}
-
-.close {
-    float: right;
-    cursor: pointer;
-}
-/* MOBILE RESPONSIVE */
-@media (max-width: 768px) {
-
-    .sidebar {
-        width: 60px;
-        padding: 10px;
-    }
-
-    .sidebar h2 {
-        font-size: 12px;
-        text-align: center;
-    }
-
-    .sidebar ul li {
-        font-size: 12px;
-        padding: 10px;
-    }
-
-    .main {
-        margin-left: 60px;
-        padding: 10px;
-    }
-
-    .welcome {
-        font-size: 18px;
-        text-align: center;
-    }
-
-    .terminal-box {
-        width: 100%;
-        height: auto;
-        padding: 10px;
-    }
-
-    .topbar {
-        flex-direction: column;
-        gap: 10px;
-    }
-    .sidebar h2 {
+    background: rgba(0,0,0,0.7);
     display: none;
 }
-.sidebar ul li {
-    text-align: center;
-}
-}
-.sidebar,
-.main,
-.terminal-box {
-    transition: all 0.3s ease;
-}
-/* GLOBAL */
-body {
-    background: #0a0f14;
-    color: #00ffcc;
-    font-family: 'Courier New', monospace;
-    margin: 0;
-    padding: 0;
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+
+    width: 400px;
+    background: black;
+    border: 1px solid #00ff9f;
+    padding: 20px;
+
+    display: none;
 }
 
-/* TITLE */
-h1 {
-    text-align: center;
-    margin-top: 40px;
-    font-size: 28px;
+.modal.active {
+    display: block;
+    transform: translate(-50%, -50%) scale(1);
 }
 
-/* LABS PAGE */
-.labs-container {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-top: 60px;
-    flex-wrap: wrap;
+.overlay.active {
+    display: block;
 }
 
-/* CARD */
-.lab-card {
-    width: 300px;
-    padding: 25px;
-    border-radius: 12px;
-    border: 1px solid #00ffcc;
-    text-align: center;
-    background: rgba(0, 255, 204, 0.05);
-    box-shadow: 0 0 20px rgba(0,255,204,0.2);
-    transition: 0.3s;
+/* ===== SCROLLBAR ===== */
+.terminal-box::-webkit-scrollbar {
+    width: 6px;
 }
 
-.lab-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0 25px #00ffcc;
-}
-
-/* BUTTON */
-.lab-card button {
-    margin-top: 15px;
-    padding: 10px 16px;
-    background: transparent;
-    border: 1px solid #00ffcc;
-    color: #00ffcc;
-    cursor: pointer;
-    border-radius: 6px;
-}
-
-.lab-card button:hover {
-    background: #00ffcc;
-    color: black;
-}
-
-/* LAB PAGE */
-.lab-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 85vh;
-}
-
-/* TERMINAL BOX */
-.terminal-box {
-    width: 420px;
-    padding: 30px;
-    border-radius: 12px;
-    border: 1px solid #00ffcc;
-    box-shadow: 0 0 20px rgba(0,255,204,0.3);
-    text-align: center;
-}
-
-/* INPUT */
-input {
-    width: 90%;
-    padding: 12px;
-    margin-top: 10px;
-    background: transparent;
-    border: 1px solid #00ffcc;
-    color: #00ffcc;
-    border-radius: 6px;
-}
-
-/* BUTTON GLOBAL */
-button {
-    margin-top: 15px;
-    padding: 10px 16px;
-    background: transparent;
-    border: 1px solid #00ffcc;
-    color: #00ffcc;
-    cursor: pointer;
-    border-radius: 6px;
-}
-
-button:hover {
-    background: #00ffcc;
-    color: black;
-}
-/* ===== PRACTICE PAGE FIX ===== */
-.labs-wrapper {
-    min-height: 80vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-@media (max-width: 768px) {
-    .labs-wrapper {
-        padding: 20px;
-        align-items: flex-start;
-    }
+.terminal-box::-webkit-scrollbar-thumb {
+    background: #00ff9f;
 }

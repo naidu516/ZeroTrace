@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ZeroTrace Wayback Lab</title>
+
+<style>
+body {
+    margin:0;
+    background:black;
+    color:#00ff9f;
+    font-family:monospace;
+}
+
+.terminal {
+    padding:20px;
+    height:90vh;
+    overflow-y:auto;
+}
+
+.input-line {
+    display:flex;
+    padding:10px;
+    border-top:1px solid #00ff9f;
+}
+
+.prompt {
+    margin-right:5px;
+}
+
+input {
+    background:black;
+    border:none;
+    color:#00ff9f;
+    outline:none;
+    width:100%;
+}
+
+p {
+    margin:4px 0;
+    text-shadow:0 0 5px #00ff9f;
+}
+</style>
+</head>
+
+<body>
+
+<div class="terminal" id="terminal"></div>
+
+<div class="input-line">
+<span class="prompt">zerotrace@wayback:~$</span>
+<input id="cmd" autofocus onkeydown="run(event)">
+</div>
+
+<script>
+
+let started = false;
+let scanning = false;
+let mode = "attack";
+
+// PRINT
+function print(text){
+    let p = document.createElement("p");
+    p.innerHTML = text;
+    terminal.appendChild(p);
+    terminal.scrollTop = terminal.scrollHeight;
+}
+
+const terminal = document.getElementById("terminal");
+const input = document.getElementById("cmd");
+
+// INIT
+function init(){
+    terminal.innerHTML = "";
+
+    print("🔐 ZeroTrace Terminal");
+    print("📌 Wayback URL Lab");
+    print("");
+    print("🎯 Objective: Discover archived URLs & hidden endpoints");
+    print("");
+    print("👉 Type: help");
+}
+
+// INPUT
+function run(e){
+    if(e.key === "Enter"){
+        let cmd = input.value.trim();
+        print("zerotrace@wayback:~$ " + cmd);
+        input.value = "";
+        handle(cmd.toLowerCase());
+    }
+}
+
+// COMMAND HANDLER
+function handle(cmd){
+
+    if(cmd === "help"){
+        print("");
+        print("📜 Commands:");
+        print("");
+        print("start                 → initialize wayback scan");
+        print("wayback urls          → fetch archived URLs");
+        print("");
+        print("mode defense          → block scan");
+        print("mode attack           → allow scan");
+        print("");
+        print("status                → show state");
+        print("clear                 → clear terminal");
+        print("");
+    }
+
+    else if(cmd === "mode defense"){
+        mode = "defense";
+        print("🛡️ Defense Mode ON (scan blocked)");
+    }
+
+    else if(cmd === "mode attack"){
+        mode = "attack";
+        print("💀 Attack Mode ON");
+    }
+
+    else if(cmd === "status"){
+        print("");
+        print("📊 Status:");
+        print("Started: " + (started ? "Yes" : "No"));
+        print("Scanning: " + (scanning ? "Running" : "Stopped"));
+        print("Mode: " + mode);
+    }
+
+    else if(cmd === "clear"){
+        terminal.innerHTML = "";
+    }
+
+    else if(cmd === "start"){
+        started = true;
+        print("");
+        print("⚙️ Connecting to Wayback Machine...");
+        print("Archive service ready ✔");
+    }
+
+    else if(cmd === "wayback urls"){
+
+        if(mode === "defense"){
+            print("🚫 Request blocked by security!");
+            return;
+        }
+
+        if(!started){
+            print("❌ Run 'start' first");
+            return;
+        }
+
+        if(scanning){
+            print("⚠️ Already fetching URLs...");
+            return;
+        }
+
+        scanning = true;
+
+        print("");
+        print("🔍 Fetching archived URLs for target...");
+        print("Target: https://example.com");
+
+        const urls = [
+            "/index.html",
+            "/login.php 🔥",
+            "/admin/ 🔥",
+            "/backup.zip 💀",
+            "/old-dashboard/",
+            "/api/v1/users",
+            "/config.php 💀",
+            "/hidden-panel/ 🔥"
+        ];
+
+        let i = 0;
+
+        const interval = setInterval(() => {
+
+            if(i < urls.length){
+                print(urls[i]);
+                i++;
+            } else {
+                clearInterval(interval);
+                scanning = false;
+                print("");
+                print("✅ URL Collection Completed!");
+                print("🔥 Sensitive endpoints discovered!");
+            }
+
+        }, 700);
+    }
+
+    else{
+        print("Command not found");
+    }
+}
+
+// INIT CALL
+init();
+
+</script>
+
+</body>
+</html>

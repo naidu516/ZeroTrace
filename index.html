@@ -13,58 +13,162 @@
 <div class="sidebar">
     <h2>⚙ ZeroTrace</h2>
     <ul>
-        <li onclick="go('index.html')">Dashboard</li>
+        <li onclick="go('userguide.html')">User Guide</li>
         <li onclick="go('project.html')">Project</li>
         <li onclick="go('tools/tools.html')">Tools</li>
         <li onclick="go('cyberattacks.html')">Cyber Attacks</li>
-        <li onclick="go('practice.html')">Practice</li>
+
+        <li onclick="go('practice/terminal-bruteforce.html')">💀 Brute Force</li>
+        <li onclick="go('practice/sql-terminal.html')">💉 SQL Injection</li>
+        <li onclick="go('practice/xss-terminal.html')">⚡ XSS</li>
+        <li onclick="go('practice/nmap-terminal.html')">🔍 Nmap</li>
+        <li onclick="go('practice/wireshark-terminal.html')">🌐 Wireshark</li>
+        <li onclick="go('practice/burp-terminal.html')">💣 Burp Suite</li>
+        <li onclick="go('practice/gobuster-terminal.html')">📂 Gobuster</li>
+        <li onclick="go('practice/wayback-terminal.html')">🕰️ Wayback</li>
     </ul>
 </div>
 
 <!-- MAIN -->
 <div class="main">
 
+    <!-- TOPBAR -->
     <div class="topbar">
         <button onclick="openAbout()">My About</button>
         <button onclick="openContact()">Contact</button>
-        <button class="logout" onclick="logout()">Logout</button>
+        <button onclick="logout()">Logout</button>
     </div>
 
-    <h1 id="welcome" class="welcome">Welcome 🚀</h1>
+    <h1 id="welcome">Welcome Shanmuga 🚀</h1>
 
     <!-- TERMINAL -->
     <div class="terminal-box">
-        <div id="terminal"></div>
+        <div id="terminal">
+            <p>root@zerotrace:~# type 'help'</p>
+        </div>
     </div>
+
+    <!-- INPUT -->
+    <input 
+        type="text" 
+        id="cmdInput" 
+        placeholder="Enter command..." 
+        autofocus
+        style="position:absolute; bottom:10px; left:50%; transform:translateX(-50%); width:60%; background:black; border:1px solid #00ff9f; color:#00ff9f; padding:10px;"
+    >
 
 </div>
 
+<!-- OVERLAY -->
+<div id="overlay" class="overlay" onclick="closeModal()"></div>
+
 <!-- ABOUT MODAL -->
 <div id="aboutModal" class="modal">
-    <div class="modal-content">
-        <span onclick="closeModal()" class="close">✖</span>
-        <h2>About</h2>
-        <p>
-        I am Shanmuga Chowdary, a BTech Cybersecurity student passionate about ethical hacking.  
-        This ZeroTrace OS is inspired by Kali Linux.
-        </p>
-    </div>
+    <span onclick="closeModal()" class="close">✖</span>
+    <h2>About</h2>
+    <p>
+        I am Shanmuga Chowdary, a BTech Cybersecurity student passionate about ethical hacking.<br><br>
+        This ZeroTrace OS is inspired by Kali Linux and built as a cybersecurity learning platform.
+    </p>
 </div>
 
 <!-- CONTACT MODAL -->
 <div id="contactModal" class="modal">
-    <div class="modal-content">
-        <span onclick="closeModal()" class="close">✖</span>
-        <h2>Contact</h2>
-        <p>
+    <span onclick="closeModal()" class="close">✖</span>
+    <h2>Contact</h2>
+    <p>
         Name: Shanmuga Chowdary<br>
-        Mobile: +91 81242097<br>
+        Mobile: +91 XXXXXXXX<br>
         Github: naidu516<br>
         Instagram: zerotrace013
-        </p>
-    </div>
+    </p>
 </div>
 
-<script type="module" src="assets/js/main.js"></script>
+<!-- JS -->
+<script>
+const terminal = document.getElementById("terminal");
+const input = document.getElementById("cmdInput");
+
+/* PRINT FUNCTION */
+function print(text){
+    terminal.innerHTML += "<p>" + text + "</p>";
+    terminal.scrollTop = terminal.scrollHeight;
+}
+
+/* COMMAND HANDLER */
+function handleCommand(cmd){
+
+    if(cmd === "help"){
+        print("Commands:");
+        print("open tools");
+        print("open nmap");
+        print("open burp");
+        print("open bruteforce");
+        print("clear");
+    }
+
+    else if(cmd === "clear"){
+        terminal.innerHTML = "";
+    }
+
+    else if(cmd === "open tools"){
+        window.location.href = "tools/tools.html";
+    }
+
+    else if(cmd === "open nmap"){
+        window.location.href = "practice/nmap-terminal.html";
+    }
+
+    else if(cmd === "open burp"){
+        window.location.href = "practice/burp-terminal.html";
+    }
+
+    else if(cmd === "open bruteforce"){
+        window.location.href = "practice/terminal-bruteforce.html";
+    }
+
+    else{
+        print("Command not found");
+    }
+}
+
+/* ENTER KEY */
+input.addEventListener("keydown", function(e){
+    if(e.key === "Enter"){
+        let cmd = input.value.trim();
+        print("> " + cmd);
+        handleCommand(cmd);
+        input.value = "";
+    }
+});
+
+/* MODAL FUNCTIONS */
+function openAbout(){
+    document.getElementById("overlay").classList.add("active");
+    document.getElementById("aboutModal").classList.add("active");
+}
+
+function openContact(){
+    document.getElementById("overlay").classList.add("active");
+    document.getElementById("contactModal").classList.add("active");
+}
+
+function closeModal(){
+    document.getElementById("overlay").classList.remove("active");
+    document.getElementById("aboutModal").classList.remove("active");
+    document.getElementById("contactModal").classList.remove("active");
+}
+
+/* NAVIGATION */
+function go(page){
+    window.location.href = page;
+}
+
+/* LOGOUT */
+function logout(){
+    alert("Logged out!");
+}
+</script>
+
 </body>
 </html>

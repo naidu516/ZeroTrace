@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ZeroTrace Nmap Lab</title>
+
+<style>
+body {
+    margin:0;
+    background:black;
+    color:#00ff9f;
+    font-family:monospace;
+}
+
+.terminal {
+    padding:20px;
+    height:90vh;
+    overflow-y:auto;
+}
+
+.input-line {
+    display:flex;
+    padding:10px;
+    border-top:1px solid #00ff9f;
+}
+
+.prompt {
+    margin-right:5px;
+}
+
+input {
+    background:black;
+    border:none;
+    color:#00ff9f;
+    outline:none;
+    width:100%;
+}
+
+p {
+    margin:4px 0;
+    text-shadow:0 0 5px #00ff9f;
+}
+</style>
+</head>
+
+<body>
+
+<div class="terminal" id="terminal"></div>
+
+<div class="input-line">
+<span class="prompt">zerotrace@nmap:~$</span>
+<input id="cmd" autofocus onkeydown="run(event)">
+</div>
+
+<script>
+
+let started = false;
+let scanning = false;
+let mode = "attack";
+
+// PRINT
+function print(text){
+    let p = document.createElement("p");
+    p.innerHTML = text;
+    terminal.appendChild(p);
+    terminal.scrollTop = terminal.scrollHeight;
+}
+
+const terminal = document.getElementById("terminal");
+const input = document.getElementById("cmd");
+
+// INIT
+function init(){
+    terminal.innerHTML = "";
+
+    print("🔐 ZeroTrace Terminal");
+    print("📌 Nmap Lab");
+    print("");
+    print("🎯 Objective: Scan open ports and services");
+    print("");
+    print("👉 Type: help");
+}
+
+// INPUT
+function run(e){
+    if(e.key === "Enter"){
+        let cmd = input.value.trim();
+        print("zerotrace@nmap:~$ " + cmd);
+        input.value = "";
+        handle(cmd.toLowerCase());
+    }
+}
+
+// COMMAND HANDLER
+function handle(cmd){
+
+    if(cmd === "help"){
+        print("");
+        print("📜 Commands:");
+        print("");
+        print("start                 → initialize nmap");
+        print("nmap scan             → run port scan");
+        print("nmap -sV              → service version scan");
+        print("");
+        print("mode defense          → block scan");
+        print("mode attack           → allow scan");
+        print("");
+        print("status                → show state");
+        print("clear                 → clear terminal");
+        print("");
+    }
+
+    else if(cmd === "mode defense"){
+        mode = "defense";
+        print("🛡️ Defense Mode ON (scan blocked)");
+    }
+
+    else if(cmd === "mode attack"){
+        mode = "attack";
+        print("💀 Attack Mode ON");
+    }
+
+    else if(cmd === "status"){
+        print("");
+        print("📊 Status:");
+        print("Started: " + (started ? "Yes" : "No"));
+        print("Scanning: " + (scanning ? "Running" : "Stopped"));
+        print("Mode: " + mode);
+    }
+
+    else if(cmd === "clear"){
+        terminal.innerHTML = "";
+    }
+
+    else if(cmd === "start"){
+        started = true;
+        print("");
+        print("⚙️ Initializing Nmap...");
+        print("Engine ready ✔");
+    }
+
+    else if(cmd === "nmap scan"){
+
+        if(mode === "defense"){
+            print("🚫 Scan blocked by firewall!");
+            return;
+        }
+
+        if(!started){
+            print("❌ Run 'start' first");
+            return;
+        }
+
+        if(scanning){
+            print("⚠️ Scan already running");
+            return;
+        }
+
+        scanning = true;
+
+        print("");
+        print("🔍 Starting scan on 192.168.1.1");
+
+        const results = [
+            "PORT     STATE  SERVICE",
+            "22/tcp   open   ssh 🔥",
+            "80/tcp   open   http",
+            "443/tcp  open   https",
+            "3306/tcp closed mysql",
+            "8080/tcp open   http-proxy 🔥"
+        ];
+
+        let i = 0;
+
+        const interval = setInterval(() => {
+
+            if(i < results.length){
+                print(results[i]);
+                i++;
+            } else {
+                clearInterval(interval);
+                scanning = false;
+                print("");
+                print("✅ Scan Completed!");
+                print("🔥 Open ports detected!");
+            }
+
+        }, 800);
+    }
+
+    else if(cmd === "nmap -sv"){
+
+        if(mode === "defense"){
+            print("🚫 Service detection blocked!");
+            return;
+        }
+
+        if(!started){
+            print("❌ Run 'start' first");
+            return;
+        }
+
+        print("");
+        print("🔍 Running service version detection...");
+
+        setTimeout(() => print("22/tcp → OpenSSH 7.4"), 800);
+        setTimeout(() => print("80/tcp → Apache 2.4.41"), 1600);
+        setTimeout(() => print("443/tcp → Nginx 1.18.0"), 2400);
+        setTimeout(() => print("8080/tcp → Node.js Express"), 3200);
+        setTimeout(() => print("🔥 Versions detected successfully!"), 4000);
+    }
+
+    else{
+        print("Command not found");
+    }
+}
+
+// INIT CALL
+init();
+
+</script>
+
+</body>
+</html>

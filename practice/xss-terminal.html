@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ZeroTrace XSS Lab</title>
+
+<style>
+body {
+    margin:0;
+    background:black;
+    color:#00ff9f;
+    font-family:monospace;
+}
+
+.terminal {
+    padding:20px;
+    height:90vh;
+    overflow-y:auto;
+}
+
+.input-line {
+    display:flex;
+    padding:10px;
+    border-top:1px solid #00ff9f;
+}
+
+.prompt {
+    margin-right:5px;
+}
+
+input {
+    background:black;
+    border:none;
+    color:#00ff9f;
+    outline:none;
+    width:100%;
+}
+
+p {
+    margin:4px 0;
+    text-shadow:0 0 5px #00ff9f;
+}
+</style>
+</head>
+
+<body>
+
+<div class="terminal" id="terminal"></div>
+
+<div class="input-line">
+<span class="prompt">zerotrace@xss:~$</span>
+<input id="cmd" autofocus onkeydown="run(event)">
+</div>
+
+<script>
+
+let started = false;
+let injected = false;
+let mode = "attack";
+
+// PRINT
+function print(text){
+    let p = document.createElement("p");
+    p.innerHTML = text;
+    terminal.appendChild(p);
+    terminal.scrollTop = terminal.scrollHeight;
+}
+
+const terminal = document.getElementById("terminal");
+const input = document.getElementById("cmd");
+
+// INIT
+function init(){
+    terminal.innerHTML = "";
+
+    print("🔐 ZeroTrace Terminal");
+    print("📌 XSS Lab");
+    print("");
+    print("🎯 Objective: Inject and execute JavaScript payload");
+    print("");
+    print("👉 Type: help");
+}
+
+// INPUT
+function run(e){
+    if(e.key === "Enter"){
+        let cmd = input.value.trim();
+        print("zerotrace@xss:~$ " + cmd);
+        input.value = "";
+        handle(cmd);
+    }
+}
+
+// COMMAND HANDLER
+function handle(cmd){
+
+    if(cmd === "help"){
+        print("");
+        print("📜 Commands:");
+        print("");
+        print("start                    → initialize target");
+        print("inject <payload>         → inject script");
+        print("steal cookies            → simulate cookie theft");
+        print("");
+        print("mode defense             → enable protection");
+        print("mode attack              → allow injection");
+        print("");
+        print("status                   → show state");
+        print("clear                    → clear terminal");
+        print("");
+    }
+
+    else if(cmd === "mode defense"){
+        mode = "defense";
+        print("🛡️ Defense Mode ON (XSS filtered)");
+    }
+
+    else if(cmd === "mode attack"){
+        mode = "attack";
+        print("💀 Attack Mode ON");
+    }
+
+    else if(cmd === "status"){
+        print("");
+        print("📊 Status:");
+        print("Started: " + (started ? "Yes" : "No"));
+        print("Injected: " + (injected ? "Yes" : "No"));
+        print("Mode: " + mode);
+    }
+
+    else if(cmd === "clear"){
+        terminal.innerHTML = "";
+    }
+
+    else if(cmd === "start"){
+        started = true;
+        print("");
+        print("🌐 Target loaded: vulnerable form");
+        print("Hint: try script injection");
+    }
+
+    else if(cmd.startsWith("inject")){
+
+        if(mode === "defense"){
+            print("🚫 Input sanitized! XSS blocked");
+            return;
+        }
+
+        if(!started){
+            print("❌ Run 'start' first");
+            return;
+        }
+
+        const payload = cmd.replace("inject ", "");
+
+        if(!payload){
+            print("❌ Provide payload");
+            return;
+        }
+
+        injected = true;
+
+        print("");
+        print("💉 Injecting payload...");
+        print(payload);
+
+        setTimeout(() => {
+            print("⚠️ Script Executed!");
+            print("🔥 XSS Successful!");
+        }, 1000);
+    }
+
+    else if(cmd === "steal cookies"){
+
+        if(mode === "defense"){
+            print("🚫 Cookies are HttpOnly (protected)");
+            return;
+        }
+
+        if(!injected){
+            print("❌ Inject payload first");
+            return;
+        }
+
+        print("");
+        print("💀 Extracting cookies...");
+        setTimeout(() => print("session=abc123xyz"), 800);
+        setTimeout(() => print("authToken=secureToken 🔥"), 1600);
+        setTimeout(() => print("⚠️ Session hijack possible"), 2400);
+    }
+
+    else{
+        print("Command not found");
+    }
+}
+
+// INIT
+init();
+
+</script>
+
+</body>
+</html>

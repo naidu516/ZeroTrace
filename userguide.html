@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZeroTrace User Guide</title>
+<link rel="stylesheet" href="assets/css/style.css">
+
+<style>
+
+/* ✅ FORCE SCROLL FIX (MAIN ISSUE) */
+body {
+    background: black;
+    color: #00ff9f;
+    font-family: monospace;
+
+    overflow-y: auto !important;   /* 🔥 FIX SCROLL */
+    overflow-x: hidden;
+}
+
+/* Smooth scroll */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Container */
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 30px;
+}
+
+/* Title */
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Sections */
+.section {
+    border: 1px solid #00ff9f;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px #00ff9f;
+    transition: 0.3s;
+}
+
+/* Hover effect */
+.section:hover {
+    box-shadow: 0 0 20px #00ff9f;
+    transform: scale(1.01);
+}
+
+/* Headings */
+h2 {
+    margin-bottom: 10px;
+}
+
+/* Code block */
+code {
+    display: block;
+    background: #001a12;
+    padding: 10px;
+    margin: 10px 0;
+    border-left: 3px solid #00ff9f;
+}
+
+/* ✅ EXTRA SAFETY (if global CSS blocking scroll) */
+body, html {
+    height: auto !important;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>📘 ZeroTrace User Guide</h1>
+
+<!-- 1 -->
+<div class="section">
+<h2>🧠 Introduction</h2>
+<p>
+ZeroTrace is a simulated cybersecurity training platform designed to help users learn real-world hacking tools and techniques in a safe and legal environment.
+</p>
+<p>
+This platform is built for beginners, students, and aspiring ethical hackers who want hands-on experience.
+</p>
+</div>
+
+<!-- 2 -->
+<div class="section">
+<h2>⚠️ Legal & Ethical Disclaimer</h2>
+<p>
+This platform is strictly for educational purposes. Any misuse of cybersecurity knowledge for unauthorized access or malicious activities is illegal.
+</p>
+<p>
+Violating cyber laws may result in serious legal consequences including fines and imprisonment.
+</p>
+</div>
+
+<!-- 3 -->
+<div class="section">
+<h2>🚀 Getting Started</h2>
+<p>Follow these steps:</p>
+<ul>
+<li>Open the website</li>
+<li>Login / Sign up</li>
+<li>Enter dashboard</li>
+<li>Explore sidebar</li>
+</ul>
+<p>No prior experience required. Everything is beginner-friendly.</p>
+</div>
+
+<!-- 4 -->
+<div class="section">
+<h2>🧭 Dashboard Overview</h2>
+<ul>
+<li>Sidebar → Navigate labs & tools</li>
+<li>Terminal → Execute commands</li>
+<li>User Name → Personalized experience</li>
+</ul>
+</div>
+
+<!-- 5 -->
+<div class="section">
+<h2>💻 Terminal System</h2>
+<p>The terminal simulates a Kali Linux environment.</p>
+
+<p>Basic Commands:</p>
+<code>help</code>
+<code>clear</code>
+<code>ls</code>
+<code>whoami</code>
+
+<p>Type commands and press Enter to execute.</p>
+</div>
+
+<!-- 6 -->
+<div class="section">
+<h2>⚙️ Tool Access via Commands</h2>
+<p>Open tools using commands:</p>
+
+<code>open nmap</code>
+<code>open burp</code>
+<code>open wireshark</code>
+
+<p>If command is invalid → system will show error.</p>
+</div>
+
+<!-- 7 -->
+<div class="section">
+<h2>🧪 Practice Labs</h2>
+<ul>
+<li>Brute Force Lab</li>
+<li>SQL Injection Lab</li>
+<li>XSS Lab</li>
+<li>Nmap Lab</li>
+<li>Wireshark Lab</li>
+<li>Burp Suite Lab</li>
+<li>Gobuster Lab</li>
+<li>Wayback URL Lab</li>
+</ul>
+</div>
+
+<!-- 8 -->
+<div class="section">
+<h2>⚔️ Attack vs Defense Mode</h2>
+<p><b>Attack Mode:</b> Learn how hacking works</p>
+<p><b>Defense Mode:</b> Learn how to prevent attacks</p>
+
+<code>mode attack</code>
+<code>mode defense</code>
+</div>
+
+<!-- 9 -->
+<div class="section">
+<h2>🔍 Lab Walkthrough Example (SQL Injection)</h2>
+
+<p>1. SQL Injection allows bypassing login</p>
+<p>2. Start lab</p>
+<p>3. Inject payload</p>
+<p>4. Observe output</p>
+
+<code>' OR 1=1 --</code>
+
+<p><b>Defense:</b> Use parameterized queries</p>
+</div>
+
+<!-- 10 -->
+<div class="section">
+<h2>🧰 Tools Explanation</h2>
+<ul>
+<li>Nmap → Network scanning</li>
+<li>Burp Suite → Web testing</li>
+<li>Wireshark → Packet analysis</li>
+<li>Hydra → Brute force</li>
+<li>Gobuster → Directory scanning</li>
+</ul>
+</div>
+
+<!-- 11 -->
+<div class="section">
+<h2>👤 User System</h2>
+<ul>
+<li>Firebase login system</li>
+<li>Personalized welcome message</li>
+<li>Session handling</li>
+</ul>
+</div>
+
+<!-- 12 -->
+<div class="section">
+<h2>🎨 UI & Experience</h2>
+<p>
+ZeroTrace provides a hacker-style interface with animations and real terminal simulation.
+</p>
+</div>
+
+<!-- 13 -->
+<div class="section">
+<h2>📘 Learning Path</h2>
+
+<p><b>Beginner:</b></p>
+<ul>
+<li>Use help command</li>
+<li>Try basic commands</li>
+</ul>
+
+<p><b>Intermediate:</b></p>
+<ul>
+<li>Complete all labs</li>
+</ul>
+
+<p><b>Advanced:</b></p>
+<ul>
+<li>Focus on attack & defense</li>
+</ul>
+</div>
+
+<!-- 14 -->
+<div class="section">
+<h2>🚫 Limitations</h2>
+<ul>
+<li>Simulated environment only</li>
+<li>No real hacking</li>
+<li>No real targets</li>
+</ul>
+</div>
+
+<!-- 16 -->
+<div class="section">
+<h2>📞 Support</h2>
+<p>
+Contact: Shanmuga Chowdary<br>
+Instagram: zerotrace013
+</p>
+</div>
+
+<!-- 17 -->
+<div class="section">
+<h2>🏁 Final Message</h2>
+<p>
+ZeroTrace is not just a tool, it’s a learning experience.<br>
+Stay ethical. Stay curious. Become a cybersecurity expert.
+</p>
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZeroTrace Terminal Lab</title>
+
+<style>
+body {
+    margin:0;
+    background:black;
+    color:#00ff9f;
+    font-family:monospace;
+}
+
+.terminal {
+    padding:20px;
+    height:90vh;
+    overflow-y:auto;
+}
+
+.input-line {
+    display:flex;
+    padding:10px;
+    border-top:1px solid #00ff9f;
+}
+
+.prompt {
+    margin-right:5px;
+}
+
+input {
+    background:black;
+    border:none;
+    color:#00ff9f;
+    outline:none;
+    width:100%;
+}
+
+p {
+    text-shadow:0 0 5px #00ff9f;
+    margin:4px 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="terminal" id="terminal"></div>
+
+<div class="input-line">
+    <span class="prompt" id="prompt">zerotrace@lab:~$</span>
+    <input id="cmd" autofocus onkeydown="run(event)">
+</div>
+
+<script>
+
+// STATE
+let currentDir, correctPassword, attempts, locked, hydraReady, running, mode, lockTimer;
+
+// INIT
+function initLab(){
+    currentDir = "home";
+    correctPassword = "1234";
+    attempts = 0;
+    locked = false;
+    hydraReady = false;
+    running = false;
+    mode = "attack";
+
+    document.getElementById("terminal").innerHTML = "";
+
+    print("🔐 Welcome to ZeroTrace Lab v1.0");
+    print("⚠️ Authorized cybersecurity training environment");
+    print("");
+
+    print("🎯 Objective: Crack password using brute force");
+    print("👉 Flow: cd wordlist → ls → bash hydra → hydra command");
+    print("");
+
+    print("👉 Type: zerotrace@lab:~$ help");
+}
+
+// UPDATE PROMPT
+function updatePrompt(){
+    const prompt = document.getElementById("prompt");
+
+    if(currentDir === "home"){
+        prompt.innerText = "zerotrace@lab:~$";
+    } else {
+        prompt.innerText = "zerotrace@lab:/wordlist$";
+    }
+}
+
+// PRINT
+function print(text){
+    const terminal = document.getElementById("terminal");
+    const p = document.createElement("p");
+    p.innerHTML = text;
+    terminal.appendChild(p);
+    terminal.scrollTop = terminal.scrollHeight;
+}
+
+// INPUT
+function run(e){
+    if(e.key === "Enter"){
+        const input = document.getElementById("cmd");
+        const cmd = input.value.trim();
+
+        print(document.getElementById("prompt").innerText + " " + cmd);
+
+        input.value = "";
+        handleCommand(cmd);
+    }
+}
+
+// COMMANDS
+function handleCommand(cmd){
+
+    if(cmd === "help"){
+        print("");
+        print("📜 Commands:");
+        print("");
+
+        print("cd wordlist       → move to wordlist folder");
+        print("ls                → list files");
+        print("bash hydra        → initialize tool");
+        print("hydra -l admin -P wordlist.txt target");
+        print("");
+        print("mode defense      → enable protection");
+        print("mode attack       → enable brute force");
+        print("");
+        print("status            → show system status");
+        print("reset             → restart lab");
+        print("unlock            → unlock system");
+        print("clear             → clear terminal");
+        print("");
+    }
+
+    else if(cmd === "status"){
+        print("");
+        print("📊 Status:");
+        print("Mode: " + mode);
+        print("Attempts: " + attempts);
+        print("Locked: " + (locked ? "Yes" : "No"));
+        print("");
+    }
+
+    else if(cmd === "reset"){
+        if(lockTimer) clearTimeout(lockTimer);
+        initLab();
+        updatePrompt();
+        print("🔁 Lab reset successfully");
+    }
+
+    else if(cmd === "mode defense"){
+        mode = "defense";
+        print("🛡️ Defense mode ON");
+    }
+
+    else if(cmd === "mode attack"){
+        mode = "attack";
+        print("💀 Attack mode ON");
+    }
+
+    else if(cmd === "unlock"){
+        locked = false;
+        print("🔓 System manually unlocked");
+    }
+
+    else if(cmd === "clear"){
+        document.getElementById("terminal").innerHTML = "";
+    }
+
+    else if(cmd === "cd wordlist"){
+        currentDir = "wordlist";
+        updatePrompt();
+        print("Moved to /wordlist");
+    }
+
+    else if(cmd === "ls"){
+        print("");
+        if(currentDir === "wordlist"){
+            print("wordlist.txt");
+        } else {
+            print("wordlist/");
+        }
+        print("");
+    }
+
+    else if(cmd === "bash hydra"){
+
+        if(currentDir !== "wordlist"){
+            print("❌ First go to wordlist → cd wordlist");
+            return;
+        }
+
+        print("Loading Hydra modules...");
+        setTimeout(() => print("Initializing engine..."), 800);
+        setTimeout(() => print("Preparing wordlist..."), 1600);
+        setTimeout(() => {
+            print("🔥 Hydra ready!");
+            print("👉 Now run: hydra -l admin -P wordlist.txt target");
+            hydraReady = true;
+        }, 2400);
+    }
+
+    else if(cmd.startsWith("hydra")){
+
+        if(mode === "defense"){
+            print("🛡️ Attack blocked!");
+            print("🚫 Input sanitized");
+            return;
+        }
+
+        if(!hydraReady){
+            print("❌ Run 'bash hydra' first");
+            return;
+        }
+
+        if(locked){
+            print("🚨 System locked! Wait or type 'unlock'");
+            return;
+        }
+
+        if(running){
+            print("⚠️ Attack already running...");
+            return;
+        }
+
+        simulateAttack();
+    }
+
+    else{
+        print("Command not found");
+    }
+}
+
+// ATTACK
+function simulateAttack(){
+
+    running = true;
+    attempts = 0;
+
+    print("");
+    print("Starting brute force attack... 💀");
+
+    const wordlist = [
+        "admin",
+        "password",
+        "123456",
+        "0000",
+        "letmein",
+        "qwerty",
+        "1234"
+    ];
+
+    let i = 0;
+
+    const interval = setInterval(() => {
+
+        const attempt = wordlist[i];
+        attempts++;
+
+        print("[ATTEMPT] admin:" + attempt);
+
+        if(attempts === 2){
+            print("💡 Hint: Password is 4 digits");
+        }
+
+        if(attempts >= 5){
+            print("🚨 Too many attempts!");
+            print("🔒 System Locked for 10 seconds!");
+            running = false;
+            locked = true;
+            clearInterval(interval);
+
+            lockTimer = setTimeout(() => {
+                locked = false;
+                print("🔓 System auto-unlocked");
+            }, 10000);
+
+            return;
+        }
+
+        if(attempt === correctPassword){
+            print("🔥 SUCCESS → Password Found: " + attempt);
+            showScore();
+            running = false;
+            clearInterval(interval);
+            return;
+        }
+
+        i++;
+
+        if(i >= wordlist.length){
+            print("❌ Attack Failed");
+            running = false;
+            clearInterval(interval);
+        }
+
+    }, 800);
+}
+
+// SCORE
+function showScore(){
+
+    let score;
+
+    if(attempts <= 3){
+        score = "🔥 Pro Hacker";
+    } else if(attempts <= 5){
+        score = "👍 Good";
+    } else {
+        score = "❌ Weak";
+    }
+
+    print("🏆 Score: " + score);
+    print("✅ Mission Completed!");
+}
+
+// INIT
+initLab();
+updatePrompt();
+
+</script>
+
+</body>
+</html>
