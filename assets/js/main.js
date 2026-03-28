@@ -6,10 +6,7 @@ import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/fi
 const firebaseConfig = {
   apiKey: "AIzaSyDmxHZD0ZhG4xV5baookq6gNReaCay09tM",
   authDomain: "zerotrace-8f464.firebaseapp.com",
-  databaseURL: "https://zerotrace-8f464-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "zerotrace-8f464",
-  storageBucket: "zerotrace-8f464.firebasestorage.app",
-  messagingSenderId: "721450663659",
   appId: "1:721450663659:web:137e7e4f2a4de6044508ae"
 };
 
@@ -20,12 +17,8 @@ const auth = getAuth(app);
 /* 👤 USERNAME */
 let currentUser = "user";
 
-/* 🔐 LOGIN CHECK (🔥 FIXED NAVIGATION ISSUE) */
+/* 🔐 LOGIN CHECK */
 onAuthStateChanged(auth, (user) => {
-
-  const publicPages = ["login.html", "landing.html", "userguide.html"];
-  const currentPage = window.location.pathname.split("/").pop();
-
   if (user) {
     const name = user.displayName || "Hacker";
 
@@ -35,38 +28,37 @@ onAuthStateChanged(auth, (user) => {
     }
 
     currentUser = name.toLowerCase().replace(/\s+/g, "");
-
   } else {
-    if (!publicPages.includes(currentPage)) {
+    if (!window.location.href.includes("login.html")) {
       window.location.href = "login.html";
     }
   }
 });
 
-/* 📂 NAVIGATION (GLOBAL FIX) */
-window.go = function(page) {
+/* 📂 NAVIGATION */
+window.go = (page) => {
   window.location.href = page;
 };
 
 /* 🚪 LOGOUT */
-window.logout = function() {
+window.logout = () => {
   signOut(auth).then(() => {
     window.location.href = "login.html";
   });
 };
 
 /* 📌 MODALS */
-window.openAbout = function() {
+window.openAbout = () => {
   const el = document.getElementById("aboutModal");
   if (el) el.style.display = "flex";
 };
 
-window.openContact = function() {
+window.openContact = () => {
   const el = document.getElementById("contactModal");
   if (el) el.style.display = "flex";
 };
 
-window.closeModal = function() {
+window.closeModal = () => {
   const about = document.getElementById("aboutModal");
   const contact = document.getElementById("contactModal");
 
@@ -108,14 +100,14 @@ function typeLine(text, speed = 20) {
   });
 }
 
-/* 🔥 PROMPT */
+/* 🔥 PRINT PROMPT */
 function printPrompt() {
   const p = document.createElement("p");
-  p.innerHTML = ${currentUser}@zerotrace:~$;
+  p.innerHTML = `${currentUser}@zerotrace:~$`;
   terminal.appendChild(p);
 }
 
-/* 🚀 BOOT */
+/* 🚀 BOOT ANIMATION */
 async function bootSequence() {
   if (!terminal) return;
 
@@ -135,36 +127,39 @@ async function bootSequence() {
 
 /* 🎯 COMMAND HANDLER */
 function handleCommand(cmd) {
-
   const p = document.createElement("p");
-  p.innerHTML = ${currentUser}@zerotrace:~$ ${cmd};
+  p.innerHTML = `${currentUser}@zerotrace:~$ ${cmd}`;
   terminal.appendChild(p);
 
-  switch(cmd) {
+  switch(cmd.toLowerCase()) {
 
     case "help":
       terminal.innerHTML += `
-        <p>Commands:</p>
-        <p>ls</p>
-        <p>whoami</p>
-        <p>clear</p>
-        <p>open tools</p>
-        <p>open nmap</p>
-        <p>open burp</p>
-        <p>open bruteforce</p>
+      <p>Commands:</p>
+      <p>ls</p>
+      <p>whoami</p>
+      <p>clear</p>
+      <p>open userguide</p>
+      <p>open tools</p>
+      <p>open nmap</p>
+      <p>open burp</p>
       `;
       break;
 
     case "ls":
-      terminal.innerHTML += <p>tools project.html tracker.html</p>;
+      terminal.innerHTML += `<p>userguide.html tools project.html</p>`;
       break;
 
     case "whoami":
-      terminal.innerHTML += <p>${currentUser}</p>;
+      terminal.innerHTML += `<p>${currentUser}</p>`;
       break;
 
     case "clear":
       terminal.innerHTML = "";
+      break;
+
+    case "open userguide":
+      window.location.href = "userguide.html";
       break;
 
     case "open tools":
@@ -184,7 +179,7 @@ function handleCommand(cmd) {
       break;
 
     default:
-      terminal.innerHTML += <p>Command not found</p>;
+      terminal.innerHTML += `<p>Command not found</p>`;
   }
 
   printPrompt();
