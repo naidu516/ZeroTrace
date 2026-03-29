@@ -150,11 +150,41 @@ async function runTool() {
     try {
         let url = "";
 
-        if (selectedTool === "whois") url = "http://127.0.0.1:5000/whois";
-        else if (selectedTool === "subdomain") url = "http://127.0.0.1:5000/subdomain";
-        else if (selectedTool === "dns") url = "http://127.0.0.1:5000/dns";
-        else if (selectedTool === "portscan") url = "http://127.0.0.1:5000/portscan";
-        else if (selectedTool === "dir") url = "http://127.0.0.1:5000/dir";
+        if (selectedTool === "whois") url = fetch("https://zerotrace-backend.onrender.com/whois", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ domain })
+        });
+        else if (selectedTool === "subdomain") url = fetch("https://zerotrace-backend.onrender.com/subdomain", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ domain })
+        });
+        else if (selectedTool === "dns") url = fetch("https://zerotrace-backend.onrender.com/dns", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ domain })
+        });
+        else if (selectedTool === "portscan") url = fetch("https://zerotrace-backend.onrender.com/portscan", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ domain })
+        });
+        else if (selectedTool === "dir") url = fetch("https://zerotrace-backend.onrender.com/dir", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ domain })
+        });
 
         const res = await fetch(url, {
             method: "POST",
