@@ -2,75 +2,145 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ZeroTrace OS</title>
-<link rel="stylesheet" href="assets/css/style.css">
+
+<style>
+body {
+    margin: 0;
+    background: black;
+    color: #00ff9f;
+    font-family: monospace;
+    overflow: hidden;
+}
+
+/* CENTER */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* TERMINAL BOX */
+.terminal {
+    width: 80%;
+    max-width: 800px;
+    border: 1px solid #00ff9f;
+    padding: 20px;
+    box-shadow: 0 0 20px #00ff9f;
+}
+
+/* TEXT */
+#text {
+    white-space: pre-line;
+}
+
+/* CURSOR */
+.cursor {
+    display: inline-block;
+    width: 10px;
+    background: #00ff9f;
+    margin-left: 5px;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50%, 100% {opacity: 1;}
+    25%, 75% {opacity: 0;}
+}
+
+/* BUTTON */
+button {
+    margin-top: 20px;
+    background: transparent;
+    color: #00ff9f;
+    border: 1px solid #00ff9f;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: none;
+}
+
+button:hover {
+    background: #00ff9f;
+    color: black;
+}
+
+/* FOOTER */
+.footer {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    opacity: 0.6;
+}
+</style>
 </head>
 
 <body>
 
-<!-- SIDEBAR -->
-<div class="sidebar">
-    <h2>⚙ ZeroTrace</h2>
-    <ul>
-        <li onclick="go('./userguide.html')">User Guide</li>
-        <li onclick="go('./project.html')">Project</li>
-        <li onclick="go('./tools/tools.html')">Tools</li>
-        <li onclick="go('./cyberattacks.html')">Cyber Attacks</li>
-
-        <li onclick="go('./practice/terminal-bruteforce.html')">💀 Brute Force</li>
-        <li onclick="go('./practice/sql-terminal.html')">💉 SQL Injection</li>
-        <li onclick="go('./practice/xss-terminal.html')">⚡ XSS</li>
-        <li onclick="go('./practice/nmap-terminal.html')">🔍 Nmap</li>
-        <li onclick="go('./practice/wireshark-terminal.html')">🌐 Wireshark</li>
-        <li onclick="go('./practice/burp-terminal.html')">💣 Burp Suite</li>
-        <li onclick="go('./practice/gobuster-terminal.html')">📂 Gobuster</li>
-        <li onclick="go('./practice/wayback-terminal.html')">🕰️ Wayback</li>
-    </ul>
-</div>
-
-<!-- MAIN -->
-<div class="main">
-
-    <!-- TOPBAR -->
-    <div class="topbar">
-        <button onclick="openAbout()">My About</button>
-        <button onclick="openContact()">Contact</button>
-        <button onclick="logout()">Logout</button>
-    </div>
-
-    <h1 id="welcome">Welcome 🚀</h1>
-
-    <!-- TERMINAL -->
-    <div class="terminal-box">
-        <div id="terminal"></div>
-    </div>
-
-    <input id="cmdInput" placeholder="Enter command..." autocomplete="off">
-
-</div>
-
-<!-- ABOUT -->
-<div id="aboutModal" class="modal">
-    <div class="modal-content">
-        <span onclick="closeModal()" class="close">✖</span>
-        <h2>About</h2>
-        <p>I am Shanmuga Chowdary, a BTech Cybersecurity student passionate about ethical hacking.</p>
+<div class="container">
+    <div class="terminal">
+        <div id="text"></div><span class="cursor"></span>
+        <br>
+        <button id="startBtn" onclick="goLogin()">ENTER SYSTEM 🚀</button>
     </div>
 </div>
 
-<!-- CONTACT -->
-<div id="contactModal" class="modal">
-    <div class="modal-content">
-        <span onclick="closeModal()" class="close">✖</span>
-        <h2>Contact</h2>
-        <p>
-        Name: Shanmuga Chowdary<br>
-        Instagram: zerotrace013
-        </p>
-    </div>
+<div class="footer">
+    ⚠ ZeroTrace OS | All Rights Reserved © 2026  
+    <br>
+    This platform is strictly for ethical cybersecurity learning. Unauthorized or illegal use is prohibited.
 </div>
 
-<script type="module" src="assets/js/main.js"></script>
+<script>
+const lines = [
+"Initializing ZeroTrace OS...",
+"Loading secure modules...",
+"Bypassing threats...",
+"System integrity check: OK",
+"",
+"⚡ Welcome to ZeroTrace ⚡",
+"",
+"An Ethical Cybersecurity Learning Platform",
+"",
+"⚠ WARNING:",
+"This system is monitored.",
+"Only ethical and legal activities are permitted.",
+"Any misuse will result in permanent access restriction.",
+"",
+"Access Ready..."
+];
+
+let i = 0;
+let j = 0;
+let currentLine = "";
+const speed = 30;
+
+function type() {
+    if (i < lines.length) {
+        if (j < lines[i].length) {
+            currentLine += lines[i][j];
+            document.getElementById("text").innerText = currentLine;
+            j++;
+            setTimeout(type, speed);
+        } else {
+            currentLine += "\n";
+            i++;
+            j = 0;
+            setTimeout(type, 300);
+        }
+    } else {
+        document.getElementById("startBtn").style.display = "inline-block";
+    }
+}
+
+type();
+
+function goLogin() {
+    window.location.href = "dashboard.html";
+}
+</script>
+
 </body>
 </html>

@@ -1,7 +1,14 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { 
+  getAuth, 
+  GoogleAuthProvider, 
+  signInWithPopup,
+  onAuthStateChanged,
+  setPersistence,
+  browserLocalPersistence
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-// 🔥 Firebase Config
+/* 🔥 FIREBASE CONFIG */
 const firebaseConfig = {
   apiKey: "AIzaSyDmxHZD0ZhG4xV5baookq6gNReaCay09tM",
   authDomain: "zerotrace-8f464.firebaseapp.com",
@@ -11,14 +18,17 @@ const firebaseConfig = {
   appId: "1:721450663659:web:137e7e4f2a4de6044508ae"
 };
 
-// 🔥 Init
+/* 🔥 INIT */
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// 🚫 Prevent multiple clicks
+/* 🔥 KEEP USER LOGGED IN (IMPORTANT) */
+setPersistence(auth, browserLocalPersistence);
+
+/* 🚫 Prevent multiple clicks */
 let isLoggingIn = false;
 
-// 🔐 LOGIN FUNCTION
+/* 🔐 LOGIN FUNCTION */
 window.loginWithGoogle = function () {
 
     if (isLoggingIn) return;
@@ -32,8 +42,13 @@ window.loginWithGoogle = function () {
     const provider = new GoogleAuthProvider();
 
     signInWithPopup(auth, provider)
-        .then((result) => {
-            window.location.href = "index.html";
+        .then(() => {
+            // 🔥 WAIT for Firebase to confirm login
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    window.location.href = "index.html";
+                }
+            });
         })
         .catch((error) => {
             alert(error.message);
@@ -44,3 +59,10 @@ window.loginWithGoogle = function () {
             btn.innerText = "Continue with Google";
         });
 };
+
+/* 🔥 AUTO REDIRECT IF ALREADY LOGGED IN */
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        window.location.href = "dashboard.html";
+    }
+});

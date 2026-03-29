@@ -10,192 +10,188 @@ const firebaseConfig = {
   appId: "1:721450663659:web:137e7e4f2a4de6044508ae"
 };
 
-/* 🔥 INIT */
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-/* 👤 USERNAME */
 let currentUser = "user";
 
 /* 🔐 LOGIN CHECK */
 onAuthStateChanged(auth, (user) => {
   if (user) {
     const name = user.displayName || "Hacker";
-
-    const welcome = document.getElementById("welcome");
-    if (welcome) {
-      welcome.innerText = "Welcome " + name + " 🚀";
-    }
-
+    document.getElementById("welcome").innerText = "Welcome " + name + " 🚀";
     currentUser = name.toLowerCase().replace(/\s+/g, "");
   } else {
-    if (!window.location.href.includes("login.html")) {
-      window.location.href = "login.html";
-    }
+    window.location.href = "login.html";
   }
 });
 
-/* 📂 NAVIGATION */
-window.go = (page) => {
-  window.location.href = page;
-};
+/* NAV */
+window.go = (p) => window.location.href = p;
+window.logout = () => signOut(auth).then(() => window.location.href = "login.html");
 
-/* 🚪 LOGOUT */
-window.logout = () => {
-  signOut(auth).then(() => {
-    window.location.href = "login.html";
-  });
-};
-
-/* 📌 MODALS */
-window.openAbout = () => {
-  const el = document.getElementById("aboutModal");
-  if (el) el.style.display = "flex";
-};
-
-window.openContact = () => {
-  const el = document.getElementById("contactModal");
-  if (el) el.style.display = "flex";
-};
-
+window.openAbout = () => document.getElementById("aboutModal").style.display = "flex";
+window.openContact = () => document.getElementById("contactModal").style.display = "flex";
 window.closeModal = () => {
-  const about = document.getElementById("aboutModal");
-  const contact = document.getElementById("contactModal");
-
-  if (about) about.style.display = "none";
-  if (contact) contact.style.display = "none";
-};
-
-/* 🚫 FORCE HIDE */
-window.onload = () => {
-  const about = document.getElementById("aboutModal");
-  const contact = document.getElementById("contactModal");
-
-  if (about) about.style.display = "none";
-  if (contact) contact.style.display = "none";
+  document.getElementById("aboutModal").style.display = "none";
+  document.getElementById("contactModal").style.display = "none";
 };
 
 /* =========================
-   💻 TERMINAL SYSTEM
+   💻 TERMINAL
 ========================= */
 
-const terminal = document.getElementById("terminal");
-const input = document.getElementById("cmdInput");
+let terminal;
+let input = "";
 
-/* 🔥 TYPE EFFECT */
-function typeLine(text, speed = 20) {
-  return new Promise(resolve => {
-    const p = document.createElement("p");
-    terminal.appendChild(p);
+const fileSystem = {
+  home: {
+    user: {
+      userguide: null,
+      project: null,
+      tools: { tools: null },
+      practice: { nmap: null, burp: null, sql: null }
+    }
+  }
+};
 
-    let i = 0;
-    const interval = setInterval(() => {
-      p.textContent += text[i];
-      i++;
-      if (i >= text.length) {
-        clearInterval(interval);
-        resolve();
-      }
-    }, speed);
-  });
+let currentPath = ["home","user"];
+
+function getDir() {
+  let d = fileSystem;
+  currentPath.forEach(p => d = d[p]);
+  return d;
 }
 
-/* 🔥 PRINT PROMPT */
-function printPrompt() {
-  const p = document.createElement("p");
-  p.innerHTML = `${currentUser}@zerotrace:~$`;
-  terminal.appendChild(p);
+function pathStr() {
+  return "/" + currentPath.join("/");
 }
 
-/* 🚀 BOOT ANIMATION */
-async function bootSequence() {
-  if (!terminal) return;
+function print(text, type="normal") {
+  const line = document.createElement("div");
 
+  if (type === "error") line.style.color = "red";
+  if (type === "dir") line.style.color = "#00d9ff";
+
+  line.textContent = text;
+  terminal.appendChild(line);
+}
+
+function newPrompt() {
+  const line = document.createElement("div");
+  line.className = "input-line";
+  terminal.appendChild(line);
+  updateLine();
+}
+
+function updateLine() {
+  const line = document.querySelector(".input-line:last-child");
+  if (line) {
+    line.textContent = `${currentUser}@zerotrace:${pathStr()}$ ${input}`;
+  }
+}
+
+function boot() {
   terminal.innerHTML = "";
-
-  await typeLine("root@zerotrace:~# boot");
-  await typeLine("ZeroTrace OS Booting...");
-  await typeLine("[ OK ] Loading kernel modules");
-  await typeLine("[ OK ] Initializing network");
-  await typeLine("[ OK ] Starting services");
-  await typeLine("[ OK ] Mounting file system");
-  await typeLine("Welcome to ZeroTrace OS 🔥");
-  await typeLine("Type 'help' to start");
-
-  printPrompt();
+  print("ZeroTrace OS Booting...");
+  print("Type 'help' to start");
+  newPrompt();
 }
 
-/* 🎯 COMMAND HANDLER */
-function handleCommand(cmd) {
-  const p = document.createElement("p");
-  p.innerHTML = `${currentUser}@zerotrace:~$ ${cmd}`;
-  terminal.appendChild(p);
+function run(cmd) {
 
-  switch(cmd.toLowerCase()) {
+  print(`${currentUser}@zerotrace:${pathStr()}$ ${cmd}`);
+
+  const [c,arg] = cmd.split(" ");
+
+  switch(c){
 
     case "help":
-      terminal.innerHTML += `
-      <p>Commands:</p>
-      <p>ls</p>
-      <p>whoami</p>
-      <p>clear</p>
-      <p>open userguide</p>
-      <p>open tools</p>
-      <p>open nmap</p>
-      <p>open burp</p>
-      `;
+      print("ls  cd  pwd  clear  whoami  open");
       break;
 
     case "ls":
-      terminal.innerHTML += `<p>userguide.html tools project.html</p>`;
+      const d = getDir();
+      for (let i in d){
+        print(i, typeof d[i]==="object" ? "dir":"normal");
+      }
+      break;
+
+    case "pwd":
+      print(pathStr());
       break;
 
     case "whoami":
-      terminal.innerHTML += `<p>${currentUser}</p>`;
+      print(currentUser);
       break;
 
     case "clear":
-      terminal.innerHTML = "";
+      boot();
+      return;
+
+    case "cd":
+      if (!arg) return print("missing arg","error");
+      if (arg==="..") currentPath.pop();
+      else if (getDir()[arg]) currentPath.push(arg);
+      else print("no dir","error");
       break;
 
-    case "open userguide":
-      window.location.href = "userguide.html";
-      break;
-
-    case "open tools":
-      window.location.href = "tools/tools.html";
-      break;
-
-    case "open nmap":
-      window.location.href = "practice/nmap-terminal.html";
-      break;
-
-    case "open burp":
-      window.location.href = "practice/burp-terminal.html";
-      break;
-
-    case "open bruteforce":
-      window.location.href = "practice/terminal-bruteforce.html";
-      break;
+    case "open":
+      if (arg==="userguide") location.href="userguide.html";
+      else if (arg==="project") location.href="project.html";
+      else if (arg==="tools") location.href="tools/tools.html";
+      else print("file not found","error");
+      return;
 
     default:
-      terminal.innerHTML += `<p>Command not found</p>`;
+      print("command not found","error");
   }
 
-  printPrompt();
-  terminal.scrollTop = terminal.scrollHeight;
+  newPrompt();
 }
 
-/* ⌨️ INPUT */
-if (input) {
-  input.addEventListener("keydown", function(e) {
-    if (e.key === "Enter") {
-      const cmd = input.value.trim();
-      input.value = "";
-      handleCommand(cmd);
+/* =========================
+   🔥 FINAL FIXED INPUT SYSTEM
+========================= */
+
+document.addEventListener("DOMContentLoaded", ()=>{
+
+  terminal = document.getElementById("terminal");
+  terminal.tabIndex = 0;
+  terminal.focus();
+
+  // ❌ REMOVE old listeners (if any)
+  terminal.onkeydown = null;
+
+  terminal.addEventListener("keydown",(e)=>{
+
+    e.preventDefault();
+    e.stopPropagation(); // 🔥 VERY IMPORTANT (fix double typing)
+
+    if (e.repeat) return; // 🔥 prevent holding key duplication
+
+    // TYPE
+    if (e.key.length === 1){
+      input += e.key;
+      updateLine();
     }
-  });
-}
 
-/* 🚀 START */
-bootSequence();
+    // BACKSPACE
+    else if (e.key === "Backspace"){
+      input = input.slice(0,-1);
+      updateLine();
+    }
+
+    // ENTER
+    else if (e.key === "Enter"){
+      const cmd = input.trim();
+      input = "";
+
+      if(cmd) run(cmd);
+      else newPrompt();
+    }
+
+  });
+
+  boot();
+});
